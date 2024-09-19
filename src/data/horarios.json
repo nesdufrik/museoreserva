@@ -1,0 +1,72 @@
+[
+	{
+		"fecha": "19-09-2024",
+		"horarios": [
+			{
+				"hora": "09:00 - 10:00",
+				"capacidad": 10,
+				"disponible": true
+			},
+			{
+				"hora": "10:00 - 11:00",
+				"capacidad": 3,
+				"disponible": true
+			},
+			{
+				"hora": "11:00 - 12:00",
+				"capacidad": 10,
+				"disponible": true
+			},
+			{
+				"hora": "12:00 - 13:00",
+				"capacidad": 7,
+				"disponible": true
+			},
+			{
+				"hora": "13:00 - 14:00",
+				"capacidad": 0,
+				"disponible": true
+			},
+			{
+				"hora": "14:00 - 15:00",
+				"capacidad": 8,
+				"disponible": true
+			}
+		]
+	},
+	{
+		"fecha": "20-09-2024",
+		"horarios": [
+			{
+				"hora": "09:00 - 10:00",
+				"capacidad": 3,
+				"disponible": true
+			},
+			{
+				"hora": "10:00 - 11:00",
+				"capacidad": 10,
+				"disponible": true
+			},
+			{
+				"hora": "11:00 - 12:00",
+				"capacidad": 1,
+				"disponible": true
+			},
+			{
+				"hora": "12:00 - 13:00",
+				"capacidad": 15,
+				"disponible": true
+			}
+		]
+	},
+	{
+		"fecha": "21-09-2024",
+		"horarios": [
+			{
+				"hora": "09:00 - 10:00",
+				"capacidad": 2,
+				"disponible": true
+			}
+		]
+	}
+]
