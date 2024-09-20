@@ -1,8 +1,6 @@
-import { createApp, markRaw } from 'vue'
+import { createApp } from 'vue'
 import PrimeVue from 'primevue/config'
 import Aura from '@primevue/themes/aura'
-import Lara from '@primevue/themes/lara'
-import Nora from '@primevue/themes/nora'
 
 import App from './App.vue'
 import pinia from './stores'
@@ -14,5 +12,15 @@ import 'primeicons/primeicons.css'
 const app = createApp(App)
 app.use(pinia)
 app.use(router)
-app.use(PrimeVue, { theme: { preset: Nora } })
+app.use(PrimeVue, {
+	theme: {
+		preset: Aura,
+		options: {
+			cssLayer: {
+				name: 'primevue',
+				order: 'tailwind-base, primevue, tailwind-utilities',
+			},
+		},
+	},
+})
 app.mount('#app')

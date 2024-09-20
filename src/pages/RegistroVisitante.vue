@@ -1,13 +1,8 @@
 <script setup>
-import { ref, computed } from 'vue'
-import { useRoute } from 'vue-router'
+import { computed } from 'vue'
 import { useReserva } from '@/composables/useReserva'
 
-const { reserva, visitante, pago } = useReserva()
-
-const route = useRoute()
-const fecha = reserva.fecha
-const hora = reserva.hora
+const { reserva, visitante } = useReserva()
 
 const precioIngreso = 20
 const disponibles = 10
@@ -21,7 +16,7 @@ const precioTotal = computed(() => reserva.value.cantidad * precioIngreso)
 		<p>Disponibles: {{ diferencia }}</p>
 	</div>
 	<!--Formulario-->
-	<div class="card flex justify-center">
+	<div class="w-max">
 		<form @submit.prevent="registrarVisitante">
 			<div class="flex-auto">
 				<label for="cantidad-personas" class="font-bold block mb-2">
@@ -46,21 +41,11 @@ const precioTotal = computed(() => reserva.value.cantidad * precioIngreso)
 			</div>
 			<div class="flex flex-col gap-2">
 				<label for="nombre-cliente">Nombre completo</label>
-				<InputText
-					type="text"
-					id="nombre-cliente"
-					v-model="visitante.nombre"
-					fluid
-				/>
+				<InputText type="text" id="nombre-cliente" v-model="visitante.nombre" />
 			</div>
 			<div class="flex flex-col gap-2">
 				<label for="correo-cliente">Correo electrónico</label>
-				<InputText
-					type="mail"
-					id="correo-cliente"
-					v-model="visitante.email"
-					fluid
-				/>
+				<InputText type="mail" id="correo-cliente" v-model="visitante.email" />
 			</div>
 			<div class="flex-auto">
 				<label for="numero-cliente" class="font-bold block mb-2"
@@ -71,7 +56,6 @@ const precioTotal = computed(() => reserva.value.cantidad * precioIngreso)
 					v-model="visitante.telefono"
 					mask="(999) 999-99999"
 					placeholder="(999) 999-99999"
-					fluid
 				/>
 			</div>
 			<Button label="Primary" />

@@ -1,0 +1,152 @@
+[
+	{
+		"fecha": "2024-09-19",
+		"horarios": [
+			{
+				"hora": "09:00 - 10:00",
+				"capacidad": 15,
+				"reservados": [
+					{
+						"nombre": "Juan Perez",
+						"email": "",
+						"telefono": "",
+						"cantidad": 5
+					},
+					{
+						"nombre": "Maria Lopez",
+						"email": "",
+						"telefono": "",
+						"cantidad": 3
+					},
+					{
+						"nombre": "Carlos Gomez",
+						"email": "",
+						"telefono": "",
+						"cantidad": 1
+					},
+					{
+						"nombre": "Ana Rodriguez",
+						"email": "",
+						"telefono": "",
+						"cantidad": 2
+					},
+					{
+						"nombre": "Pedro Martinez",
+						"email": "",
+						"telefono": "",
+						"cantidad": 1
+					},
+					{
+						"nombre": "Laura Fernandez",
+						"email": "",
+						"telefono": "",
+						"cantidad": 3
+					}
+				],
+				"disponibles": 0,
+				"reservado": true
+			},
+			{
+				"hora": "10:00 - 11:00",
+				"capacidad": 15,
+				"reservados": [
+					{
+						"nombre": "Juan Perez",
+						"email": "",
+						"telefono": "",
+						"cantidad": 5
+					},
+					{
+						"nombre": "Maria Lopez",
+						"email": "",
+						"telefono": "",
+						"cantidad": 3
+					},
+					{
+						"nombre": "Laura Fernandez",
+						"email": "",
+						"telefono": "",
+						"cantidad": 1
+					}
+				],
+				"disponibles": 6,
+				"reservado": false
+			}
+		]
+	},
+	{
+		"fecha": "2024-09-20",
+		"horarios": [
+			{
+				"hora": "09:00 - 10:00",
+				"capacidad": 15,
+				"reservados": [
+					{
+						"nombre": "Juan Perez",
+						"email": "",
+						"telefono": "",
+						"cantidad": 5
+					},
+					{
+						"nombre": "Maria Lopez",
+						"email": "",
+						"telefono": "",
+						"cantidad": 3
+					},
+					{
+						"nombre": "Carlos Gomez",
+						"email": "",
+						"telefono": "",
+						"cantidad": 1
+					},
+					{
+						"nombre": "Ana Rodriguez",
+						"email": "",
+						"telefono": "",
+						"cantidad": 2
+					},
+					{
+						"nombre": "Pedro Martinez",
+						"email": "",
+						"telefono": "",
+						"cantidad": 1
+					},
+					{
+						"nombre": "Laura Fernandez",
+						"email": "",
+						"telefono": "",
+						"cantidad": 3
+					}
+				],
+				"disponibles": 0,
+				"reservado": true
+			},
+			{
+				"hora": "10:00 - 11:00",
+				"capacidad": 15,
+				"reservados": [
+					{
+						"nombre": "Juan Perez",
+						"email": "",
+						"telefono": "",
+						"cantidad": 5
+					},
+					{
+						"nombre": "Maria Lopez",
+						"email": "",
+						"telefono": "",
+						"cantidad": 3
+					},
+					{
+						"nombre": "Laura Fernandez",
+						"email": "",
+						"telefono": "",
+						"cantidad": 1
+					}
+				],
+				"disponibles": 6,
+				"reservado": false
+			}
+		]
+	}
+]

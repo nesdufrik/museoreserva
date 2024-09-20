@@ -1,17 +1,25 @@
 <template>
-	<div class="card flex justify-center">
+	<div class="justify-center mb-5">
 		<DatePicker v-model="date" inline showWeek />
 	</div>
-	<div class="card flex justify-center">
-		<template v-for="elm in horario.horarios">
+	<div class="grid grid-cols-2 gap-4 justify-center">
+		<template v-for="(elm, index) in horario.horarios" :key="index">
 			<Button
 				type="button"
-				style="width: 100%; display: flex; flex-direction: column"
+				class="flex flex-col items-center"
 				:disabled="elm.capacidad === 0"
 				@click="registrarDatosReserva(horario.fecha, elm.hora)"
 			>
-				<div style="font-weight: bold; font-size: 1rem">{{ elm.hora }}</div>
-				<div style="font-style: italic; font-size: 0.8rem">
+				<div
+					class="text-center font-semibold text-xl"
+					:class="elm.capacidad === 0 ? 'text-muted-color' : 'text-black'"
+				>
+					{{ elm.hora }}
+				</div>
+				<div
+					class="text-center font-semibold text-sm"
+					:class="elm.capacidad === 0 ? 'text-muted-color' : 'text-black'"
+				>
 					{{ elm.capacidad }} disponibles
 				</div>
 			</Button>
@@ -21,7 +29,7 @@
 
 <script setup>
 import { ref, watch } from 'vue'
-import { format, parse } from '@formkit/tempo'
+import { format } from '@formkit/tempo'
 import { useRouter } from 'vue-router'
 
 import { useHorarios } from '@/composables/useHorarios'
