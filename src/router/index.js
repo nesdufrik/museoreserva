@@ -1,14 +1,29 @@
 import { createWebHistory, createRouter } from 'vue-router'
 
-import FechaHora from '@/pages/FechaHora.vue'
+import Home from '@/pages/Home.vue'
 import RegistroVisitante from '@/pages/RegistroVisitante.vue'
+import PagoVisitante from '@/pages/PagoVisitante.vue'
 
 const routes = [
-	{ path: '/', name: 'Inicio', component: FechaHora },
+	{
+		path: '/',
+		name: 'Home',
+		component: Home,
+	},
 	{
 		path: '/registro',
 		name: 'RegistroVisitante',
 		component: RegistroVisitante,
+	},
+	{
+		path: '/pago',
+		name: 'PagoVisitante',
+		component: PagoVisitante,
+	},
+	{
+		path: '/realizado',
+		name: 'PagoRealizado',
+		component: () => import('@/pages/PagoRealizado.vue'),
 	},
 ]
 

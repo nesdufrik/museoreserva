@@ -1,0 +1,32 @@
+[
+	{
+		"_id": "1",
+		"fecha": "2024-09-20",
+		"inicioEvento": "09:00",
+		"evento": {
+			"_id": "1",
+			"nombre": "Evento 1",
+			"descripcion": "Descripción del evento 1",
+			"duracion": 45,
+			"capacidad": 15,
+			"precios": [
+				{
+					"tipo": "Adulto",
+					"precio": 20
+				},
+				{
+					"tipo": "Niño",
+					"precio": 10
+				},
+				{
+					"tipo": "Extranjero",
+					"precio": 30
+				}
+			]
+		},
+		"reservas": [],
+		"spots": 15,
+		"finEvento": "09:45",
+		"activo": true
+	}
+]

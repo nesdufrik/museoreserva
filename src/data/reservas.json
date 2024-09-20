@@ -22,7 +22,11 @@
 						"nombre": "Carlos Gomez",
 						"email": "",
 						"telefono": "",
-						"cantidad": 1
+						"cantidad": {
+							"adultos": 1,
+							"ninos": 1,
+							"extranjeros": 0
+						}
 					},
 					{
 						"nombre": "Ana Rodriguez",
