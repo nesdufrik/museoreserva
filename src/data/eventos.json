@@ -1,8 +1,52 @@
 [
 	{
-		"_id": "1",
+		"_id": "even-01",
 		"nombre": "Evento 1",
 		"descripcion": "Descripción del evento 1",
+		"duracion": 45,
+		"capacidad": 15,
+		"precios": [
+			{
+				"tipo": "Adulto",
+				"precio": 20
+			},
+			{
+				"tipo": "Niño",
+				"precio": 10
+			},
+			{
+				"tipo": "Extranjero",
+				"precio": 30
+			}
+		],
+		"activo": true
+	},
+	{
+		"_id": "even-02",
+		"nombre": "Evento 2",
+		"descripcion": "Descripción del evento 2",
+		"duracion": 45,
+		"capacidad": 15,
+		"precios": [
+			{
+				"tipo": "Adulto",
+				"precio": 20
+			},
+			{
+				"tipo": "Niño",
+				"precio": 10
+			},
+			{
+				"tipo": "Extranjero",
+				"precio": 30
+			}
+		],
+		"activo": true
+	},
+	{
+		"_id": "even-03",
+		"nombre": "Evento 3",
+		"descripcion": "Descripción del evento 3",
 		"duracion": 45,
 		"capacidad": 15,
 		"precios": [

@@ -1,10 +1,11 @@
 <template>
 	<div class="text-center text-9xl my-16">🎉</div>
-	<div>
+	<div class="card">
 		<h3 class="text-3xl text-center mb-7">Genial, ya tienes tu reserva</h3>
 		<p class="text-center">
 			Una vez confirmada tu reserva enviaremos un resumen de la reserva a tu
-			correo electrónico <strong>{{ 'nombre@mail.com' }}</strong
+			correo electrónico
+			<span class="text-xl font-bold italic">{{ visitante.email }}</span
 			>. Si no recibes el correo electrónico, revisa tu carpeta de correo no
 			deseado.
 		</p>
@@ -20,6 +21,9 @@
 </template>
 <script setup>
 import { useRouter } from 'vue-router'
+import { useReserva } from '@/composables/useReserva'
+
+const { visitante } = useReserva()
 const router = useRouter()
 
 const volverAlInicio = () => {

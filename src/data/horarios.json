@@ -1,78 +1,226 @@
 [
 	{
-		"fecha": "19-09-2024",
-		"horarios": [
-			{
-				"_id": "1",
-				"hora": "09:00 - 10:00",
-				"capacidad": 10,
-				"disponible": true
-			},
-			{
-				"_id": "2",
-				"hora": "10:00 - 11:00",
-				"capacidad": 3,
-				"disponible": true
-			},
-			{
-				"_id": "3",
-				"hora": "11:00 - 12:00",
-				"capacidad": 10,
-				"disponible": true
-			},
-			{
-				"_id": "4",
-				"hora": "12:00 - 13:00",
-				"capacidad": 7,
-				"disponible": true
-			},
-			{
-				"_id": "5",
-				"hora": "13:00 - 14:00",
-				"capacidad": 0,
-				"disponible": true
-			},
-			{
-				"_id": "6",
-				"hora": "14:00 - 15:00",
-				"capacidad": 8,
-				"disponible": true
-			}
-		]
+		"_id": "prog-01",
+		"fecha": "2024-09-20",
+		"inicioEvento": "09:00",
+		"finEvento": "09:45",
+		"spots": 10,
+		"activo": true
 	},
 	{
-		"fecha": "20-09-2024",
-		"horarios": [
-			{
-				"hora": "09:00 - 10:00",
-				"capacidad": 3,
-				"disponible": true
-			},
-			{
-				"hora": "10:00 - 11:00",
-				"capacidad": 10,
-				"disponible": true
-			},
-			{
-				"hora": "11:00 - 12:00",
-				"capacidad": 1,
-				"disponible": true
-			},
-			{
-				"hora": "12:00 - 13:00",
-				"capacidad": 15,
-				"disponible": true
-			}
-		]
+		"_id": "prog-02",
+		"fecha": "2024-09-20",
+		"inicioEvento": "10:00",
+		"finEvento": "10:45",
+		"spots": 10,
+		"activo": false
 	},
 	{
-		"fecha": "21-09-2024",
-		"horarios": [
-			{
-				"hora": "09:00 - 10:00",
-				"capacidad": 2,
-				"disponible": true
-			}
-		]
+		"_id": "prog-03",
+		"fecha": "2024-09-20",
+		"inicioEvento": "11:00",
+		"finEvento": "11:45",
+		"spots": 10,
+		"activo": true
+	},
+	{
+		"_id": "prog-04",
+		"fecha": "2024-09-20",
+		"inicioEvento": "12:00",
+		"finEvento": "12:45",
+		"spots": 10,
+		"activo": true
+	},
+	{
+		"_id": "prog-05",
+		"fecha": "2024-09-20",
+		"inicioEvento": "13:00",
+		"finEvento": "13:45",
+		"spots": 10,
+		"activo": true
+	},
+	{
+		"_id": "prog-06",
+		"fecha": "2024-09-20",
+		"inicioEvento": "14:00",
+		"finEvento": "14:45",
+		"spots": 10,
+		"activo": true
+	},
+	{
+		"_id": "prog-07",
+		"fecha": "2024-09-20",
+		"inicioEvento": "15:00",
+		"finEvento": "15:45",
+		"spots": 10,
+		"activo": true
+	},
+	{
+		"_id": "prog-08",
+		"fecha": "2024-09-21",
+		"inicioEvento": "09:00",
+		"finEvento": "09:45",
+		"spots": 10,
+		"activo": true
+	},
+	{
+		"_id": "prog-09",
+		"fecha": "2024-09-21",
+		"inicioEvento": "10:00",
+		"finEvento": "10:45",
+		"spots": 10,
+		"activo": true
+	},
+	{
+		"_id": "prog-10",
+		"fecha": "2024-09-21",
+		"inicioEvento": "11:00",
+		"finEvento": "11:45",
+		"spots": 10,
+		"activo": true
+	},
+	{
+		"_id": "prog-11",
+		"fecha": "2024-09-21",
+		"inicioEvento": "12:00",
+		"finEvento": "12:45",
+		"spots": 10,
+		"activo": false
+	},
+	{
+		"_id": "prog-12",
+		"fecha": "2024-09-21",
+		"inicioEvento": "13:00",
+		"finEvento": "13:45",
+		"spots": 10,
+		"activo": true
+	},
+	{
+		"_id": "prog-13",
+		"fecha": "2024-09-21",
+		"inicioEvento": "14:00",
+		"finEvento": "14:45",
+		"spots": 10,
+		"activo": true
+	},
+	{
+		"_id": "prog-14",
+		"fecha": "2024-09-21",
+		"inicioEvento": "15:00",
+		"finEvento": "15:45",
+		"spots": 10,
+		"activo": true
+	},
+	{
+		"_id": "prog-15",
+		"fecha": "2024-09-22",
+		"inicioEvento": "09:00",
+		"finEvento": "09:45",
+		"spots": 10,
+		"activo": true
+	},
+	{
+		"_id": "prog-16",
+		"fecha": "2024-09-22",
+		"inicioEvento": "10:00",
+		"finEvento": "10:45",
+		"spots": 10,
+		"activo": true
+	},
+	{
+		"_id": "prog-17",
+		"fecha": "2024-09-22",
+		"inicioEvento": "11:00",
+		"finEvento": "11:45",
+		"spots": 10,
+		"activo": true
+	},
+	{
+		"_id": "prog-18",
+		"fecha": "2024-09-22",
+		"inicioEvento": "12:00",
+		"finEvento": "12:45",
+		"spots": 10,
+		"activo": true
+	},
+	{
+		"_id": "prog-19",
+		"fecha": "2024-09-22",
+		"inicioEvento": "13:00",
+		"finEvento": "13:45",
+		"spots": 10,
+		"activo": true
+	},
+	{
+		"_id": "prog-20",
+		"fecha": "2024-09-22",
+		"inicioEvento": "14:00",
+		"finEvento": "14:45",
+		"spots": 10,
+		"activo": true
+	},
+	{
+		"_id": "prog-21",
+		"fecha": "2024-09-22",
+		"inicioEvento": "15:00",
+		"finEvento": "15:45",
+		"spots": 10,
+		"activo": true
+	},
+	{
+		"_id": "prog-22",
+		"fecha": "2024-09-23",
+		"inicioEvento": "09:00",
+		"finEvento": "09:45",
+		"spots": 10,
+		"activo": true
+	},
+	{
+		"_id": "prog-23",
+		"fecha": "2024-09-23",
+		"inicioEvento": "10:00",
+		"finEvento": "10:45",
+		"spots": 10,
+		"activo": false
+	},
+	{
+		"_id": "prog-24",
+		"fecha": "2024-09-23",
+		"inicioEvento": "11:00",
+		"finEvento": "11:45",
+		"spots": 10,
+		"activo": true
+	},
+	{
+		"_id": "prog-25",
+		"fecha": "2024-09-23",
+		"inicioEvento": "12:00",
+		"finEvento": "12:45",
+		"spots": 10,
+		"activo": true
+	},
+	{
+		"_id": "prog-26",
+		"fecha": "2024-09-23",
+		"inicioEvento": "13:00",
+		"finEvento": "13:45",
+		"spots": 10,
+		"activo": false
+	},
+	{
+		"_id": "prog-27",
+		"fecha": "2024-09-23",
+		"inicioEvento": "14:00",
+		"finEvento": "14:45",
+		"spots": 10,
+		"activo": true
+	},
+	{
+		"_id": "prog-28",
+		"fecha": "2024-09-23",
+		"inicioEvento": "15:00",
+		"finEvento": "15:45",
+		"spots": 10,
+		"activo": false
 	}
 ]

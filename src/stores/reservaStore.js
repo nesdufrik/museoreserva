@@ -9,14 +9,19 @@ export const useReservaStore = defineStore('reserva', {
 				telefono: '',
 			},
 			reserva: {
-				fecha: '',
-				hora: '',
-				cantidad: 1,
+				idEvento: null,
+				cantidad: [],
+				cantidadTotal: 0,
 			},
 			pago: {
-				precioUnitario: 20,
-				total: 20,
+				total: 0,
 				comprobante: null,
+			},
+			horario: {
+				fecha: null,
+				inicioEvento: null,
+				finEvento: null,
+				spots: 0,
 			},
 		}
 	},

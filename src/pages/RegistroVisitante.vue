@@ -1,15 +1,17 @@
 <template>
-	<h1 class="text-center text-5xl mb-5">Reservas Museo</h1>
-	<div class="flex flex-col mb-10">
-		<div class="text-center">{{ reserva.fecha }}</div>
+	<h2 class="text-center text-2xl font-bold mb-3">DATOS DEL VISITANTE</h2>
+	<div class="card flex flex-col mb-10">
+		<div class="text-center">{{ format(horario.fecha, 'medium', 'es') }}</div>
 		<div class="grid grid-flow-col gap-5">
 			<div class="flex flex-col items-center w-full">
 				<h3 class="text-3xl">Horario</h3>
-				<span class="text-lg">{{ reserva.hora }}</span>
+				<span class="text-lg">{{
+					`${horario.inicioEvento} - ${horario.finEvento}`
+				}}</span>
 			</div>
 			<div class="flex flex-col items-center w-full">
 				<h3 class="text-3xl">Cupos</h3>
-				<span class="text-lg">{{ diferencia }}</span>
+				<span class="text-lg">{{ cuposRestantes }}</span>
 			</div>
 		</div>
 	</div>
@@ -17,24 +19,36 @@
 	<div class="w-full">
 		<form class="flex flex-col gap-4">
 			<div class="flex gap-6">
-				<div class="flex-auto w-1/2">
-					<label for="cantidad-personas" class="block mb-2"> Personas </label>
-					<InputNumber
-						inputClass="w-full"
-						inputId="cantidad-personas"
-						v-model="reserva.cantidad"
-						showButtons
-						buttonLayout="horizontal"
-						:min="1"
-						:max="disponibles"
+				<div class="w-1/2">
+					<div
+						class="flex-auto"
+						v-for="(pago, index) in evento.precios"
+						:key="index"
 					>
-						<template #incrementbuttonicon>
-							<span class="pi pi-plus" />
-						</template>
-						<template #decrementbuttonicon>
-							<span class="pi pi-minus" />
-						</template>
-					</InputNumber>
+						<label :for="`cantidad-personas${index}`" class="block mb-2">
+							{{ pago.tipo }}
+						</label>
+						<InputNumber
+							inputClass="w-full"
+							:inputId="`cantidad-personas${index}`"
+							v-model="reserva.cantidad[index].cantidad"
+							showButtons
+							buttonLayout="horizontal"
+							:min="0"
+							:max="
+								cuposRestantes <= 0
+									? reserva.cantidad[index].cantidad
+									: horario.spots
+							"
+						>
+							<template #incrementbuttonicon>
+								<span class="pi pi-plus" />
+							</template>
+							<template #decrementbuttonicon>
+								<span class="pi pi-minus" />
+							</template>
+						</InputNumber>
+					</div>
 				</div>
 				<div class="flex w-1/2 items-end justify-end text-2xl">
 					{{ precioTotal }} BOB.
@@ -71,7 +85,7 @@
 			</div>
 			<Button
 				label="Reserva ahora"
-				icon="pi pi-check"
+				icon="pi pi-calendar"
 				size="large"
 				@click="registrarReserva"
 			/>
@@ -81,17 +95,36 @@
 <script setup>
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
+import { format } from '@formkit/tempo'
 import { useReserva } from '@/composables/useReserva'
+import { useEvento } from '@/composables/useEvento'
 
-const { reserva, visitante } = useReserva()
+const { visitante, pago, horario, reserva } = useReserva()
+const { evento } = useEvento()
+
 const router = useRouter()
 
-const precioIngreso = 20
-const disponibles = 10
-const diferencia = computed(() => disponibles - reserva.value.cantidad)
-const precioTotal = computed(() => reserva.value.cantidad * precioIngreso)
+const cuposRestantes = computed(
+	() =>
+		horario.value.spots -
+		reserva.value.cantidad.reduce((acc, curr) => acc + curr.cantidad, 0)
+)
+const precioTotal = computed(() =>
+	reserva.value.cantidad.reduce(
+		(acc, curr) =>
+			acc +
+			evento.value.precios.find((p) => p.tipo === curr.tipo).precio *
+				curr.cantidad,
+		0
+	)
+)
+
 const registrarReserva = () => {
-	console.log('Reserva registrada')
+	reserva.value.cantidadTotal = reserva.value.cantidad.reduce(
+		(acc, curr) => acc + curr.cantidad,
+		0
+	)
+	pago.value.total = precioTotal.value
 	router.push({ name: 'PagoVisitante' })
 }
 </script>

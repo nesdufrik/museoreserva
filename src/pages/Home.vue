@@ -1,21 +1,20 @@
 <template>
-	<h1 class="text-center text-5xl mb-5">Reservas Museo</h1>
+	<h2 class="text-center text-2xl font-bold mb-3">FECHAS Y HORARIOS</h2>
 	<div class="flex justify-center mb-5">
 		<DatePicker v-model="date" inline :disabledDays="[0, 6]" />
 	</div>
 	<div class="grid grid-cols-2 gap-4 justify-center">
-		<template v-for="(elm, index) in horario.horarios" :key="index">
+		<template v-for="(horario, index) in horarios" :key="index">
 			<Button
-				type="button"
 				severity="secondary"
 				class="flex flex-col items-center"
-				:disabled="elm.capacidad === 0"
-				@click="registrarDatosReserva(horario.fecha, elm.hora)"
+				@click="registrarDatosReserva(horario._id)"
+				:disabled="!horario.activo"
 			>
 				<div class="text-center font-semibold text-xl">
-					{{ elm.hora }}
+					{{ `${horario.inicioEvento} - ${horario.finEvento}` }}
 				</div>
-				<div class="text-center text-sm">{{ elm.capacidad }} disponibles</div>
+				<div class="text-center text-sm">{{ horario.spots }} disponibles</div>
 			</Button>
 		</template>
 	</div>
@@ -23,39 +22,38 @@
 
 <script setup>
 import { ref, watch } from 'vue'
-import { format } from '@formkit/tempo'
 import { useRouter } from 'vue-router'
 
+import { useEvento } from '@/composables/useEvento'
 import { useHorarios } from '@/composables/useHorarios'
 import { useReserva } from '@/composables/useReserva'
 
-const { horarios } = useHorarios()
-const { reserva } = useReserva()
+const { cargarEvento, evento } = useEvento()
+const { horarios, cargarHorarios } = useHorarios()
+const { reserva, horario } = useReserva()
 
 const date = ref(new Date())
-const horario = ref()
 const router = useRouter()
 
-const buscarHorarios = () => {
-	const fecha = format(date.value, 'DD-MM-YYYY')
-	const horariosDisponibles = horarios.find(
-		(horario) => horario.fecha === fecha
-	)
-	if (horariosDisponibles) {
-		horario.value = horariosDisponibles
-	} else {
-		horario.value = []
-	}
-}
+const registrarDatosReserva = (idProg) => {
+	const tipoVisitas = evento.value.precios.map((pago) => ({
+		tipo: pago.tipo,
+		cantidad: 0,
+	}))
 
-const registrarDatosReserva = (fecha, hora) => {
-	reserva.value.fecha = fecha
-	reserva.value.hora = hora
-	reserva.value.cantidad = 2
+	reserva.value = {
+		...reserva.value,
+		cantidad: tipoVisitas,
+		idEvento: 'even-01',
+	}
+	const horarioSeleccionado = horarios.value.find((h) => h._id === idProg)
+	horario.value = horarioSeleccionado
 
 	router.push({ name: 'RegistroVisitante' })
 }
 
-buscarHorarios()
-watch(date, buscarHorarios)
+watch(date, cargarHorarios)
+
+cargarEvento('even-01')
+cargarHorarios(date.value)
 </script>
