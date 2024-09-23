@@ -16,6 +16,10 @@
 			{
 				"tipo": "Niño",
 				"cantidad": 3
+			},
+			{
+				"tipo": "Extranjero",
+				"cantidad": 0
 			}
 		],
 		"cantidadTotal": 5,

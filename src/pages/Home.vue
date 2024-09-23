@@ -1,7 +1,12 @@
 <template>
 	<h2 class="text-center text-2xl font-bold mb-3">FECHAS Y HORARIOS</h2>
 	<div class="flex justify-center mb-5">
-		<DatePicker v-model="date" inline :disabledDays="[0, 6]" />
+		<DatePicker
+			v-model="date"
+			inline
+			:disabledDays="evento?.diasNoActivo"
+			:minDate="new Date()"
+		/>
 	</div>
 	<div class="grid grid-cols-2 gap-4 justify-center">
 		<template v-for="(horario, index) in horarios" :key="index">
@@ -9,7 +14,7 @@
 				severity="secondary"
 				class="flex flex-col items-center"
 				@click="registrarDatosReserva(horario._id)"
-				:disabled="!horario.activo"
+				:disabled="botonDesactivado(horario.inicioEvento, horario.activo)"
 			>
 				<div class="text-center font-semibold text-xl">
 					{{ `${horario.inicioEvento} - ${horario.finEvento}` }}
@@ -23,6 +28,7 @@
 <script setup>
 import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
+import { format } from '@formkit/tempo'
 
 import { useEvento } from '@/composables/useEvento'
 import { useHorarios } from '@/composables/useHorarios'
@@ -50,6 +56,15 @@ const registrarDatosReserva = (idProg) => {
 	horario.value = horarioSeleccionado
 
 	router.push({ name: 'RegistroVisitante' })
+}
+
+const botonDesactivado = (hora, activo) => {
+	const actual = new Date()
+	const horario = new Date(
+		`${date.value.toISOString().split('T')[0]}T${hora}:00`
+	)
+	if (actual > horario) return true
+	return !activo
 }
 
 watch(date, cargarHorarios)

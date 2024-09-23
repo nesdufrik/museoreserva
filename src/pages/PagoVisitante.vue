@@ -27,16 +27,21 @@
 	</div>
 	<div class="flex flex-col gap-3 mt-10">
 		<Toast position="top-center" :pt="{ root: 'w-11/12' }" />
+		<ConfirmDialog>
+			<template #message>
+				<img v-if="src" :src="src" alt="Image" class="rounded-xl h-full w-64" />
+			</template>
+		</ConfirmDialog>
 		<FileUpload
 			mode="basic"
-			name="demo[]"
-			url="/api/upload"
+			name="demo"
 			accept="image/*"
-			:maxFileSize="1000000"
+			:maxFileSize="350000"
 			invalidFileSizeMessage="Tamaño de archivo excedido"
 			invalidFileTypeMessage="Tipo de archivo no permitido"
-			@upload="onUpload"
-			:auto="true"
+			@select="onUpload"
+			customUpload
+			auto
 			chooseLabel="Subir comprobante"
 			chooseIcon="pi pi-upload"
 			:chooseButtonProps="{ size: 'large', severity: 'secondary' }"
@@ -47,19 +52,28 @@
 			icon="pi pi-check"
 			size="large"
 			@click="registrarPago"
+			severity="success"
+			:disabled="!pago.comprobante"
+			:loading="loading"
 		/>
 	</div>
 </template>
 <script setup>
 import { ref } from 'vue'
+import { useConfirm } from 'primevue/useconfirm'
 import { useToast } from 'primevue/usetoast'
 import { useRouter } from 'vue-router'
 import { useReserva } from '@/composables/useReserva'
 
-const { pago } = useReserva()
+const { pago, pagarReserva } = useReserva()
+
 const toast = useToast()
+const confirm = useConfirm()
 const router = useRouter()
+
 const qrImage = ref(null)
+const src = ref(null)
+const loading = ref(false)
 
 const guardarQr = async () => {
 	try {
@@ -146,16 +160,53 @@ const compartirQr = async () => {
 	}
 }
 
-const onUpload = () => {
-	toast.add({
-		severity: 'info',
-		summary: 'Success',
-		detail: 'File Uploaded',
-		life: 3000,
+const onUpload = (event) => {
+	const file = event.files[0]
+	const reader = new FileReader()
+
+	reader.onload = async (e) => {
+		src.value = e.target.result
+	}
+
+	reader.readAsDataURL(file)
+
+	confirm.require({
+		message: 'Are you sure you want to proceed?',
+		header: 'Comprobante de pago',
+		icon: 'pi pi-exclamation-triangle',
+		rejectProps: {
+			label: 'Cancelar',
+			severity: 'secondary',
+			outlined: true,
+		},
+		acceptProps: {
+			label: 'Correcto',
+		},
+		accept: () => {
+			pago.value.comprobante = src.value
+
+			toast.add({
+				severity: 'info',
+				summary: 'Confirmación',
+				detail: 'Comprobante listo para ser enviado',
+				life: 3000,
+			})
+		},
+		reject: () => {
+			toast.add({
+				severity: 'error',
+				summary: 'Rejected',
+				detail: 'You have rejected',
+				life: 3000,
+			})
+		},
 	})
 }
 
-const registrarPago = () => {
+const registrarPago = async () => {
+	loading.value = true
+	await pagarReserva()
+	loading.value = false
 	router.push({ name: 'PagoRealizado' })
 }
 </script>

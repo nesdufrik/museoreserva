@@ -21,7 +21,7 @@
 			<div class="flex gap-6">
 				<div class="w-1/2">
 					<div
-						class="flex-auto"
+						class="flex-auto mb-2"
 						v-for="(pago, index) in evento.precios"
 						:key="index"
 					>

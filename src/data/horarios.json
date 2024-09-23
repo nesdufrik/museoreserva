@@ -222,5 +222,61 @@
 		"finEvento": "15:45",
 		"spots": 10,
 		"activo": false
+	},
+	{
+		"_id": "prog-29",
+		"fecha": "2024-09-24",
+		"inicioEvento": "09:00",
+		"finEvento": "09:45",
+		"spots": 10,
+		"activo": true
+	},
+	{
+		"_id": "prog-30",
+		"fecha": "2024-09-24",
+		"inicioEvento": "10:00",
+		"finEvento": "10:45",
+		"spots": 10,
+		"activo": true
+	},
+	{
+		"_id": "prog-31",
+		"fecha": "2024-09-24",
+		"inicioEvento": "11:00",
+		"finEvento": "11:45",
+		"spots": 10,
+		"activo": true
+	},
+	{
+		"_id": "prog-32",
+		"fecha": "2024-09-24",
+		"inicioEvento": "12:00",
+		"finEvento": "12:45",
+		"spots": 10,
+		"activo": true
+	},
+	{
+		"_id": "prog-33",
+		"fecha": "2024-09-24",
+		"inicioEvento": "13:00",
+		"finEvento": "13:45",
+		"spots": 0,
+		"activo": false
+	},
+	{
+		"_id": "prog-34",
+		"fecha": "2024-09-24",
+		"inicioEvento": "14:00",
+		"finEvento": "14:45",
+		"spots": 10,
+		"activo": true
+	},
+	{
+		"_id": "prog-35",
+		"fecha": "2024-09-24",
+		"inicioEvento": "15:00",
+		"finEvento": "15:45",
+		"spots": 10,
+		"activo": true
 	}
 ]
