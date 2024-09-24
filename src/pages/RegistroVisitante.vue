@@ -2,18 +2,6 @@
 	<h2 class="text-center text-2xl font-bold mb-3">DATOS DEL VISITANTE</h2>
 	<div class="card flex flex-col mb-10">
 		<div class="text-center">{{ format(horario.fecha, 'medium', 'es') }}</div>
-		<div class="grid grid-flow-col gap-5">
-			<div class="flex flex-col items-center w-full">
-				<h3 class="text-3xl">Horario</h3>
-				<span class="text-lg">{{
-					`${horario.inicioEvento} - ${horario.finEvento}`
-				}}</span>
-			</div>
-			<div class="flex flex-col items-center w-full">
-				<h3 class="text-3xl">Cupos</h3>
-				<span class="text-lg">{{ cuposRestantes }}</span>
-			</div>
-		</div>
 	</div>
 	<!--Formulario-->
 	<div class="w-full">
@@ -50,8 +38,19 @@
 						</InputNumber>
 					</div>
 				</div>
-				<div class="flex w-1/2 items-end justify-end text-2xl">
-					{{ precioTotal }} BOB.
+				<div class="flex w-1/2 items-end justify-between text-xl flex-col">
+					<div class="flex flex-col items-end">
+						<span class="font-bold">HORARIO</span>
+						<span>{{ `${horario.inicioEvento} - ${horario.finEvento}` }}</span>
+					</div>
+					<div class="flex flex-col items-end">
+						<span class="font-bold">CUPOS</span>
+						<span>{{ cuposRestantes }}</span>
+					</div>
+					<div class="flex flex-col items-end">
+						<span class="font-bold">TOTAL</span>
+						<span>{{ precioTotal }} BOB</span>
+					</div>
 				</div>
 			</div>
 			<div class="flex flex-col gap-2">
@@ -76,12 +75,43 @@
 				<label for="numero-cliente" class="font-bold block mb-2"
 					>Número de teléfono</label
 				>
-				<InputMask
-					id="numero-cliente"
-					v-model="visitante.telefono"
-					mask="+999 99999999"
-					placeholder="+000 12345678"
-				/>
+				<InputGroup>
+					<Select
+						v-model="selectedCountry"
+						:options="countries"
+						filter
+						optionLabel="country"
+						placeholder="🌎"
+						class="w-2/5"
+					>
+						<template #value="slotProps">
+							<div v-if="slotProps.value" class="flex items-center">
+								<div>
+									{{
+										`${slotProps.value.emoji} (${slotProps.value.countryCode})`
+									}}
+								</div>
+							</div>
+							<span v-else>
+								{{ slotProps.placeholder }}
+							</span>
+						</template>
+						<template #option="slotProps">
+							<div class="flex items-center">
+								<div>
+									{{ slotProps.option.emoji }} {{ slotProps.option.country }} (+
+									{{ slotProps.option.countryCode }})
+								</div>
+							</div>
+						</template>
+					</Select>
+					<InputNumber
+						v-model="numero"
+						inputId="numero-cliente"
+						:useGrouping="false"
+						class="w-auto"
+					/>
+				</InputGroup>
 			</div>
 			<Button
 				label="Reserva ahora"
@@ -93,16 +123,34 @@
 	</div>
 </template>
 <script setup>
-import { computed } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { format } from '@formkit/tempo'
 import { useReserva } from '@/composables/useReserva'
 import { useEvento } from '@/composables/useEvento'
+import countries from '@/data/countries.json'
 
 const { visitante, pago, horario, reserva } = useReserva()
 const { evento } = useEvento()
 
 const router = useRouter()
+const selectedCountry = ref({
+	country: 'Bolivia',
+	countryCode: 591,
+	code: 'BO',
+	flag: 'https://flagcdn.com/bo.svg',
+	emoji: '🇧🇴',
+	latinAmerica: true,
+	phoneLength: 9,
+})
+const numero = ref()
+
+visitante.value.telefono = computed(() => {
+	if (selectedCountry.value) {
+		return `${selectedCountry.value.countryCode}${numero.value}`
+	}
+	return ''
+})
 
 const cuposRestantes = computed(
 	() =>
