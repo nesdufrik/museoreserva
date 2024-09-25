@@ -1,8 +1,10 @@
-import horarios from '@/data/horarios.json'
 import { format } from '@formkit/tempo'
+import axios from 'axios'
 
-export const getHorarios = (fecha) => {
+export const getHorarios = async (fecha, idEvento) => {
 	const fechaFormateada = format(fecha, 'YYYY-MM-DD')
-	const res = horarios.filter((horario) => horario.fecha === fechaFormateada)
-	return res
+	const res = await axios.get(
+		`/horarios?idevento=${idEvento}&fecha=${fechaFormateada}`
+	)
+	return res.data
 }

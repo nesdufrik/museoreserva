@@ -1,6 +1,6 @@
-import eventos from '@/data/eventos.json'
+import axios from 'axios'
 
-export const getEventos = (idEvento) => {
-	const res = eventos.find((evento) => evento._id === idEvento)
-	return res
+export const getEventos = async (idEvento) => {
+	const res = await axios.get(`/eventos?idevento=${idEvento}`)
+	return res.data
 }

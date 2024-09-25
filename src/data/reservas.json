@@ -1,7 +1,7 @@
 [
 	{
 		"_id": "res-01",
-		"idEvento": "even-01",
+		"idProg": "prog-01",
 		"cliente": {
 			"idCliente": "cli-01",
 			"nombre": "Juan Perez",
@@ -31,7 +31,7 @@
 	},
 	{
 		"_id": "res-02",
-		"idEvento": "even-01",
+		"idProg": "prog-01",
 		"cliente": {
 			"idCliente": "cli-02",
 			"nombre": "Maria Lopez",
@@ -53,7 +53,7 @@
 	},
 	{
 		"_id": "res-03",
-		"idEvento": "even-01",
+		"idProg": "prog-01",
 		"cliente": {
 			"idCliente": "cli-03",
 			"nombre": "Carlos Gomez",

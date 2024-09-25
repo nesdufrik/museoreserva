@@ -1,4 +1,5 @@
 import { storeToRefs } from 'pinia'
+import { postReserva } from '@/services/reservasService'
 import { useReservaStore } from '@/stores/reservaStore'
 
 export const useReserva = () => {
@@ -6,19 +7,18 @@ export const useReserva = () => {
 	const { visitante, reserva, pago, horario } = storeToRefs(reservaStore)
 
 	const pagarReserva = async () => {
-		const url =
-			'https://n8n.friktek.com/webhook/0156e664-898b-478f-878e-260cc3bf4fbd'
+		const payload = {
+			identificador: reserva.value.identificador,
+			idProg: horario.value.identificador,
+			cliente: visitante.value,
+			cantidad: reserva.value.cantidad,
+			cantidadTotal: reserva.value.cantidadTotal,
+			pago: pago.value,
+		}
+		console.log(payload)
 
-		const response = await fetch(url, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(pago.value),
-		})
-
-		const data = await response.json()
-		console.log(data)
+		/* const response = await postReserva(payload)
+		console.log(response) */
 	}
 
 	return {

@@ -4,12 +4,13 @@ export const useReservaStore = defineStore('reserva', {
 	state: () => {
 		return {
 			visitante: {
+				identificador: crypto.randomUUID(),
 				nombre: '',
 				email: '',
 				telefono: '',
 			},
 			reserva: {
-				idEvento: null,
+				identificador: crypto.randomUUID(),
 				cantidad: [],
 				cantidadTotal: 0,
 			},

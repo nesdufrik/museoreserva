@@ -1,7 +1,7 @@
 <template>
 	<h2 class="text-center text-2xl font-bold mb-3">DATOS DEL VISITANTE</h2>
 	<div class="card flex flex-col mb-10">
-		<div class="text-center">{{ format(horario.fecha, 'medium', 'es') }}</div>
+		<div class="text-center">{{ format(horario.fecha, 'long', 'es') }}</div>
 	</div>
 	<!--Formulario-->
 	<div class="w-full">
@@ -123,7 +123,7 @@
 	</div>
 </template>
 <script setup>
-import { computed, ref, watch } from 'vue'
+import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { format } from '@formkit/tempo'
 import { useReserva } from '@/composables/useReserva'
@@ -143,14 +143,8 @@ const selectedCountry = ref({
 	latinAmerica: true,
 	phoneLength: 9,
 })
-const numero = ref()
 
-visitante.value.telefono = computed(() => {
-	if (selectedCountry.value) {
-		return `${selectedCountry.value.countryCode}${numero.value}`
-	}
-	return ''
-})
+const numero = ref()
 
 const cuposRestantes = computed(
 	() =>
@@ -168,6 +162,8 @@ const precioTotal = computed(() =>
 )
 
 const registrarReserva = () => {
+	visitante.value.telefono = `${selectedCountry.value.countryCode}${numero.value}`
+
 	reserva.value.cantidadTotal = reserva.value.cantidad.reduce(
 		(acc, curr) => acc + curr.cantidad,
 		0

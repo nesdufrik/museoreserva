@@ -207,6 +207,6 @@ const registrarPago = async () => {
 	loading.value = true
 	await pagarReserva()
 	loading.value = false
-	router.push({ name: 'PagoRealizado' })
+	// router.push({ name: 'PagoRealizado' })
 }
 </script>

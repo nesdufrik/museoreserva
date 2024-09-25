@@ -6,9 +6,9 @@ export const useHorarios = () => {
 	const horarioStore = useHorarioStore()
 	const { horarios } = storeToRefs(horarioStore)
 
-	const cargarHorarios = async (fecha) => {
-		const response = await getHorarios(fecha)
-		horarios.value = response
+	const cargarHorarios = async (fecha, idEvento) => {
+		const response = await getHorarios(fecha, idEvento)
+		horarios.value = response.data
 	}
 
 	return {

@@ -8,7 +8,7 @@ export const useEvento = () => {
 
 	const cargarEvento = async (idEvento) => {
 		const response = await getEventos(idEvento)
-		evento.value = response
+		evento.value = response.data
 	}
 
 	return {

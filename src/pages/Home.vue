@@ -2,18 +2,18 @@
 	<h2 class="text-center text-2xl font-bold mb-3">FECHAS Y HORARIOS</h2>
 	<div class="flex justify-center mb-5">
 		<DatePicker
-			v-model="date"
+			v-model="dateCalendario"
 			inline
 			:disabledDays="evento?.diasNoActivo"
 			:minDate="new Date()"
 		/>
 	</div>
 	<div class="grid grid-cols-2 gap-4 justify-center">
-		<template v-for="(horario, index) in horarios" :key="index">
+		<template v-for="horario in horarios" :key="horario.identificador">
 			<Button
 				severity="secondary"
 				class="flex flex-col items-center"
-				@click="registrarDatosReserva(horario._id)"
+				@click="registrarDatosReserva(horario.identificador)"
 				:disabled="botonDesactivado(horario.inicioEvento, horario.activo)"
 			>
 				<div class="text-center font-semibold text-xl">
@@ -28,7 +28,6 @@
 <script setup>
 import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
-import { format } from '@formkit/tempo'
 
 import { useEvento } from '@/composables/useEvento'
 import { useHorarios } from '@/composables/useHorarios'
@@ -38,7 +37,7 @@ const { cargarEvento, evento } = useEvento()
 const { horarios, cargarHorarios } = useHorarios()
 const { reserva, horario } = useReserva()
 
-const date = ref(new Date())
+const dateCalendario = ref(new Date())
 const router = useRouter()
 
 const registrarDatosReserva = (idProg) => {
@@ -50,9 +49,11 @@ const registrarDatosReserva = (idProg) => {
 	reserva.value = {
 		...reserva.value,
 		cantidad: tipoVisitas,
-		idEvento: 'even-01',
+		idEvento: evento.value.identificador,
 	}
-	const horarioSeleccionado = horarios.value.find((h) => h._id === idProg)
+	const horarioSeleccionado = horarios.value.find(
+		(h) => h.identificador === idProg
+	)
 	horario.value = horarioSeleccionado
 
 	router.push({ name: 'RegistroVisitante' })
@@ -60,15 +61,17 @@ const registrarDatosReserva = (idProg) => {
 
 const botonDesactivado = (hora, activo) => {
 	const actual = new Date()
-	const horario = new Date(
-		`${date.value.toISOString().split('T')[0]}T${hora}:00`
-	)
+	const horario = new Date(dateCalendario.value)
+	horario.setHours(hora.split(':')[0], hora.split(':')[1])
+
 	if (actual > horario) return true
 	return !activo
 }
 
-watch(date, cargarHorarios)
+watch(dateCalendario, (newDate) => {
+	cargarHorarios(newDate, 'd999971a-613f-4093-9361-9213f819d011')
+})
 
-cargarEvento('even-01')
-cargarHorarios(date.value)
+cargarEvento('d999971a-613f-4093-9361-9213f819d011')
+cargarHorarios(dateCalendario.value, 'd999971a-613f-4093-9361-9213f819d011')
 </script>
