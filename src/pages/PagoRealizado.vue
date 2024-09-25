@@ -20,13 +20,11 @@
 	</div>
 </template>
 <script setup>
-import { useRouter } from 'vue-router'
 import { useReserva } from '@/composables/useReserva'
 
 const { visitante } = useReserva()
-const router = useRouter()
 
 const volverAlInicio = () => {
-	router.push({ name: 'Home' })
+	window.location.href = '/'
 }
 </script>

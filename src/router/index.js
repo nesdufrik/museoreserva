@@ -25,6 +25,11 @@ const routes = [
 		name: 'PagoRealizado',
 		component: () => import('@/pages/PagoRealizado.vue'),
 	},
+	{
+		path: '/rechazado',
+		name: 'ReservaRechazada',
+		component: () => import('@/pages/ReservaRechazada.vue'),
+	},
 ]
 
 const router = createRouter({

@@ -205,8 +205,15 @@ const onUpload = (event) => {
 
 const registrarPago = async () => {
 	loading.value = true
-	await pagarReserva()
+	const exito = await pagarReserva()
 	loading.value = false
-	// router.push({ name: 'PagoRealizado' })
+
+	if (!exito.success) {
+		router.push({ name: 'ReservaRechazada' })
+		return
+	}
+
+	router.push({ name: 'PagoRealizado' })
+	return
 }
 </script>

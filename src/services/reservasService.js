@@ -8,3 +8,12 @@ export const postReserva = async (reserva) => {
 		console.error(error)
 	}
 }
+
+export const postPreReserva = async (reserva) => {
+	try {
+		const response = await axios.post('/reservas/pre', reserva)
+		return response.data
+	} catch (error) {
+		console.error(error)
+	}
+}

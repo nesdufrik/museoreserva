@@ -15,10 +15,9 @@ export const useReserva = () => {
 			cantidadTotal: reserva.value.cantidadTotal,
 			pago: pago.value,
 		}
-		console.log(payload)
 
-		/* const response = await postReserva(payload)
-		console.log(response) */
+		const response = await postReserva(payload)
+		return response
 	}
 
 	return {
