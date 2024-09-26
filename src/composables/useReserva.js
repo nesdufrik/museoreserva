@@ -1,5 +1,5 @@
 import { storeToRefs } from 'pinia'
-import { postReserva } from '@/services/reservasService'
+import { postReserva, postPreReserva } from '@/services/reservasService'
 import { useReservaStore } from '@/stores/reservaStore'
 
 export const useReserva = () => {
@@ -24,6 +24,24 @@ export const useReserva = () => {
 		return response
 	}
 
+	const prereservar = async () => {
+		visitante.value.nombre = visitante.value.nombre.toUpperCase()
+		visitante.value.email = visitante.value.email.toLowerCase()
+
+		const payload = {
+			identificador: reserva.value.identificador,
+			idProg: horario.value.identificador,
+			cliente: visitante.value,
+			cantidad: reserva.value.cantidad,
+			cantidadTotal: reserva.value.cantidadTotal,
+			pago: pago.value,
+			fechaRegistro: new Date().toISOString(),
+		}
+
+		const response = await postPreReserva(payload)
+		return response
+	}
+
 	return {
 		visitante,
 		reserva,
@@ -31,5 +49,6 @@ export const useReserva = () => {
 		horario,
 
 		pagarReserva,
+		prereservar,
 	}
 }

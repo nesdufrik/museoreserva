@@ -1,61 +1,69 @@
 <template>
 	<h1 class="text-center text-2xl font-bold">PAGO DE RESERVA</h1>
-	<img
-		ref="qrImage"
-		src="@/assets/qr-code.jpg"
-		alt="QR Code"
-		class="w-3/4 md:w-1/2 mx-auto my-3"
-	/>
-	<div class="flex justify-center gap-4">
-		<Button
-			label="Guardar QR"
-			icon="pi pi-download"
-			size="small"
-			@click="guardarQr"
-			severity="secondary"
-		/>
-		<Button
-			label="Compartir"
-			icon="pi pi-share-alt"
-			size="small"
-			@click="compartirQr"
-			severity="secondary"
-		/>
-	</div>
-	<div class="text-center text-xl font-semibold my-4">
-		Total: {{ pago.total }} BOB.
-	</div>
-	<div class="flex flex-col gap-3 mt-10">
-		<Toast position="top-center" :pt="{ root: 'w-11/12' }" />
-		<ConfirmDialog>
-			<template #message>
-				<img v-if="src" :src="src" alt="Image" class="rounded-xl h-full w-64" />
-			</template>
-		</ConfirmDialog>
-		<FileUpload
-			mode="basic"
-			name="demo"
-			accept="image/*"
-			:maxFileSize="350000"
-			invalidFileSizeMessage="Tamaño de archivo excedido"
-			invalidFileTypeMessage="Tipo de archivo no permitido"
-			@select="onUpload"
-			customUpload
-			auto
-			chooseLabel="Subir comprobante"
-			chooseIcon="pi pi-upload"
-			:chooseButtonProps="{ size: 'large', severity: 'secondary' }"
-			class="w-full"
-		/>
-		<Button
-			label="Ya pagué"
-			icon="pi pi-check"
-			size="large"
-			@click="registrarPago"
-			severity="success"
-			:disabled="disabledButton"
-			:loading="loading"
-		/>
+	<div class="grid grid-cols-1 md:grid-cols-2">
+		<div>
+			<img
+				ref="qrImage"
+				src="@/assets/qr-code.jpg"
+				alt="QR Code"
+				class="w-3/4 md:w-1/2 mx-auto my-3"
+			/>
+			<div class="flex justify-center gap-4">
+				<Button
+					label="Guardar QR"
+					icon="pi pi-download"
+					size="small"
+					@click="guardarQr"
+					severity="secondary"
+				/>
+				<Button
+					label="Compartir"
+					icon="pi pi-share-alt"
+					size="small"
+					@click="compartirQr"
+					severity="secondary"
+				/>
+			</div>
+			<div class="text-center text-xl font-semibold my-4">
+				Total: {{ pago.total }} BOB.
+			</div>
+		</div>
+		<div class="flex flex-col gap-3 mt-10">
+			<ConfirmDialog>
+				<template #message>
+					<img
+						v-if="src"
+						:src="src"
+						alt="Image"
+						class="rounded-xl h-full w-64"
+					/>
+				</template>
+			</ConfirmDialog>
+			<FileUpload
+				mode="basic"
+				name="demo"
+				accept="image/*"
+				:maxFileSize="350000"
+				invalidFileSizeMessage="Tamaño de archivo excedido"
+				invalidFileTypeMessage="Tipo de archivo no permitido"
+				@select="onUpload"
+				customUpload
+				auto
+				chooseLabel="Subir comprobante"
+				chooseIcon="pi pi-upload"
+				:chooseButtonProps="{ size: 'large', severity: 'secondary' }"
+				class="w-full"
+			/>
+			<Button
+				label="Ya pagué"
+				icon="pi pi-check"
+				size="large"
+				@click="registrarPago"
+				severity="success"
+				:disabled="disabledButton"
+				:loading="loading"
+			/>
+		</div>
 	</div>
 </template>
 <script setup>

@@ -1,35 +1,37 @@
 <template>
 	<h2 class="text-center text-2xl font-bold mb-3">FECHAS Y HORARIOS</h2>
-	<div class="flex justify-center mb-5">
-		<DatePicker
-			v-model="dateCalendario"
-			inline
-			:disabledDays="evento?.diasNoActivo"
-			:minDate="new Date()"
-		/>
-	</div>
-	<div class="grid grid-cols-2 gap-4 justify-center" v-if="action">
-		<Skeleton
-			width="100%"
-			height="5rem"
-			v-for="index in 6"
-			:key="index"
-		></Skeleton>
-	</div>
-	<div class="grid grid-cols-2 gap-4 justify-center" v-else>
-		<template v-for="horario in horarios" :key="horario.identificador">
-			<Button
-				severity="secondary"
-				class="flex flex-col items-center"
-				@click="registrarDatosReserva(horario.identificador)"
-				:disabled="botonDesactivado(horario.inicioEvento, horario.activo)"
-			>
-				<div class="text-center font-semibold text-xl">
-					{{ `${horario.inicioEvento} - ${horario.finEvento}` }}
-				</div>
-				<div class="text-center text-sm">{{ horario.spots }} disponibles</div>
-			</Button>
-		</template>
+	<div class="grid grid-cols-1 md:grid-cols-2">
+		<div class="flex justify-center mb-5">
+			<DatePicker
+				v-model="dateCalendario"
+				inline
+				:disabledDays="evento?.diasNoActivo"
+				:minDate="new Date()"
+			/>
+		</div>
+		<div class="grid grid-cols-2 gap-4 justify-center" v-if="action">
+			<Skeleton
+				width="100%"
+				height="5rem"
+				v-for="index in 6"
+				:key="index"
+			></Skeleton>
+		</div>
+		<div class="grid grid-cols-2 gap-4 justify-center" v-else>
+			<template v-for="horario in horarios" :key="horario.identificador">
+				<Button
+					severity="secondary"
+					class="flex flex-col items-center"
+					@click="registrarDatosReserva(horario.identificador)"
+					:disabled="botonDesactivado(horario.inicioEvento, horario.activo)"
+				>
+					<div class="text-center font-semibold text-xl">
+						{{ `${horario.inicioEvento} - ${horario.finEvento}` }}
+					</div>
+					<div class="text-center text-sm">{{ horario.spots }} disponibles</div>
+				</Button>
+			</template>
+		</div>
 	</div>
 </template>
 

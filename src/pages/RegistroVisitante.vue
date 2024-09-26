@@ -127,6 +127,8 @@
 				label="Reserva ahora"
 				icon="pi pi-calendar"
 				size="large"
+				:loading="loading"
+				:disabled="loading"
 				@click="registrarReserva"
 			/>
 		</form>
@@ -139,11 +141,13 @@ import { format } from '@formkit/tempo'
 import { useReserva } from '@/composables/useReserva'
 import { useEvento } from '@/composables/useEvento'
 import countries from '@/data/countries.json'
+import { useToast } from 'primevue/usetoast'
 
-const { visitante, pago, horario, reserva } = useReserva()
+const { visitante, pago, horario, reserva, prereservar } = useReserva()
 const { evento } = useEvento()
 
 const router = useRouter()
+const toast = useToast()
 const selectedCountry = ref({
 	country: 'Bolivia',
 	countryCode: 591,
@@ -155,6 +159,7 @@ const selectedCountry = ref({
 })
 
 const numero = ref()
+const loading = ref(false)
 
 const cuposRestantes = computed(
 	() =>
@@ -171,7 +176,8 @@ const precioTotal = computed(() =>
 	)
 )
 
-const registrarReserva = () => {
+const registrarReserva = async () => {
+	loading.value = true
 	visitante.value.telefono = `${selectedCountry.value.countryCode}${numero.value}`
 
 	reserva.value.cantidadTotal = reserva.value.cantidad.reduce(
@@ -179,6 +185,19 @@ const registrarReserva = () => {
 		0
 	)
 	pago.value.total = precioTotal.value
-	router.push({ name: 'PagoVisitante' })
+
+	const exito = await prereservar()
+	loading.value = false
+	if (exito.success) {
+		router.push({ name: 'PagoVisitante' })
+		return
+	}
+
+	toast.add({
+		severity: 'error',
+		summary: 'Error',
+		detail: exito.message,
+		life: 3000,
+	})
 }
 </script>
