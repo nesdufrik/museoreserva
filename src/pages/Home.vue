@@ -8,7 +8,15 @@
 			:minDate="new Date()"
 		/>
 	</div>
-	<div class="grid grid-cols-2 gap-4 justify-center">
+	<div class="grid grid-cols-2 gap-4 justify-center" v-if="action">
+		<Skeleton
+			width="100%"
+			height="5rem"
+			v-for="index in 6"
+			:key="index"
+		></Skeleton>
+	</div>
+	<div class="grid grid-cols-2 gap-4 justify-center" v-else>
 		<template v-for="horario in horarios" :key="horario.identificador">
 			<Button
 				severity="secondary"
@@ -34,7 +42,7 @@ import { useHorarios } from '@/composables/useHorarios'
 import { useReserva } from '@/composables/useReserva'
 
 const { cargarEvento, evento } = useEvento()
-const { horarios, cargarHorarios } = useHorarios()
+const { horarios, cargarHorarios, action } = useHorarios()
 const { reserva, horario } = useReserva()
 
 const dateCalendario = ref(new Date())

@@ -7,6 +7,9 @@ export const useReserva = () => {
 	const { visitante, reserva, pago, horario } = storeToRefs(reservaStore)
 
 	const pagarReserva = async () => {
+		visitante.value.nombre = visitante.value.nombre.toUpperCase()
+		visitante.value.email = visitante.value.email.toLowerCase()
+
 		const payload = {
 			identificador: reserva.value.identificador,
 			idProg: horario.value.identificador,
@@ -14,6 +17,7 @@ export const useReserva = () => {
 			cantidad: reserva.value.cantidad,
 			cantidadTotal: reserva.value.cantidadTotal,
 			pago: pago.value,
+			fechaRegistro: new Date().toISOString(),
 		}
 
 		const response = await postReserva(payload)

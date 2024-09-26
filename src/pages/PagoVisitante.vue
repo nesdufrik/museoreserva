@@ -53,13 +53,13 @@
 			size="large"
 			@click="registrarPago"
 			severity="success"
-			:disabled="!pago.comprobante"
+			:disabled="disabledButton"
 			:loading="loading"
 		/>
 	</div>
 </template>
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useConfirm } from 'primevue/useconfirm'
 import { useToast } from 'primevue/usetoast'
 import { useRouter } from 'vue-router'
@@ -171,9 +171,7 @@ const onUpload = (event) => {
 	reader.readAsDataURL(file)
 
 	confirm.require({
-		message: 'Are you sure you want to proceed?',
 		header: 'Comprobante de pago',
-		icon: 'pi pi-exclamation-triangle',
 		rejectProps: {
 			label: 'Cancelar',
 			severity: 'secondary',
@@ -186,7 +184,7 @@ const onUpload = (event) => {
 			pago.value.comprobante = src.value
 
 			toast.add({
-				severity: 'info',
+				severity: 'success',
 				summary: 'Confirmación',
 				detail: 'Comprobante listo para ser enviado',
 				life: 3000,
@@ -194,14 +192,20 @@ const onUpload = (event) => {
 		},
 		reject: () => {
 			toast.add({
-				severity: 'error',
-				summary: 'Rejected',
-				detail: 'You have rejected',
+				severity: 'warn',
+				summary: 'Cancelado',
+				detail: 'Cancelaste la subida del comprobante',
 				life: 3000,
 			})
 		},
 	})
 }
+
+const disabledButton = computed(() => {
+	if (loading.value) return true
+	if (!pago.value.comprobante) return true
+	return false
+})
 
 const registrarPago = async () => {
 	loading.value = true

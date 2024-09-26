@@ -86,10 +86,14 @@
 					>
 						<template #value="slotProps">
 							<div v-if="slotProps.value" class="flex items-center">
+								<img
+									:alt="slotProps.value.country"
+									:src="slotProps.value.flag"
+									:class="`mr-2 flag flag-${slotProps.value.code.toLowerCase()}`"
+									style="width: 18px"
+								/>
 								<div>
-									{{
-										`${slotProps.value.emoji} (${slotProps.value.countryCode})`
-									}}
+									{{ `(+${slotProps.value.countryCode})` }}
 								</div>
 							</div>
 							<span v-else>
@@ -98,8 +102,14 @@
 						</template>
 						<template #option="slotProps">
 							<div class="flex items-center">
+								<img
+									:alt="slotProps.option.label"
+									:src="slotProps.option.flag"
+									:class="`mr-2`"
+									style="width: 18px"
+								/>
 								<div>
-									{{ slotProps.option.emoji }} {{ slotProps.option.country }} (+
+									{{ slotProps.option.country }} (+
 									{{ slotProps.option.countryCode }})
 								</div>
 							</div>

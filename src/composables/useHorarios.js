@@ -4,15 +4,21 @@ import { useHorarioStore } from '@/stores/horarioStore'
 
 export const useHorarios = () => {
 	const horarioStore = useHorarioStore()
-	const { horarios } = storeToRefs(horarioStore)
+	const { horarios, action } = storeToRefs(horarioStore)
 
 	const cargarHorarios = async (fecha, idEvento) => {
-		const response = await getHorarios(fecha, idEvento)
-		horarios.value = response.data
+		action.value = true
+		const res = await getHorarios(fecha, idEvento)
+		const resSorted = res.data.sort((a, b) => {
+			return a.inicioEvento.localeCompare(b.inicioEvento)
+		})
+		horarios.value = resSorted
+		action.value = false
 	}
 
 	return {
 		horarios,
+		action,
 
 		cargarHorarios,
 	}
