@@ -7,6 +7,9 @@
 				inline
 				:disabledDays="evento?.diasNoActivo"
 				:minDate="new Date()"
+				@update:modelValue="
+					cargarHorarios(dateCalendario, 'd999971a-613f-4093-9361-9213f819d011')
+				"
 			/>
 		</div>
 		<div class="grid grid-cols-2 gap-4 justify-center" v-if="action">
@@ -36,7 +39,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 import { useEvento } from '@/composables/useEvento'
@@ -77,10 +80,6 @@ const botonDesactivado = (hora, activo) => {
 	if (actual > horario) return true
 	return !activo
 }
-
-watch(dateCalendario, (newDate) => {
-	cargarHorarios(newDate, 'd999971a-613f-4093-9361-9213f819d011')
-})
 
 cargarEvento('d999971a-613f-4093-9361-9213f819d011')
 cargarHorarios(dateCalendario.value, 'd999971a-613f-4093-9361-9213f819d011')

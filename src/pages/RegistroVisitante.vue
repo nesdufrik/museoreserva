@@ -60,15 +60,17 @@
 					type="text"
 					id="nombre-cliente"
 					v-model="visitante.nombre"
+					:invalid="visitante.nombre === '' && invalid"
 				/>
 			</div>
 			<div class="flex flex-col gap-2">
 				<label for="correo-cliente">Correo electrónico</label>
 				<InputText
 					class="lowercase"
-					type="mail"
+					type="email"
 					id="correo-cliente"
 					v-model="visitante.email"
+					:invalid="visitante.email === '' && invalid"
 				/>
 			</div>
 			<div class="flex-auto">
@@ -117,6 +119,7 @@
 					</Select>
 					<InputNumber
 						v-model="numero"
+						:invalid="numero === null && invalid"
 						inputId="numero-cliente"
 						:useGrouping="false"
 						class="w-auto"
@@ -158,8 +161,9 @@ const selectedCountry = ref({
 	phoneLength: 9,
 })
 
-const numero = ref()
+const numero = ref(null)
 const loading = ref(false)
+const invalid = ref(false)
 
 const cuposRestantes = computed(
 	() =>
@@ -177,22 +181,35 @@ const precioTotal = computed(() =>
 )
 
 const registrarReserva = async () => {
+	if (
+		visitante.value.nombre === '' ||
+		visitante.value.email === '' ||
+		numero.value === null
+	) {
+		invalid.value = true
+		toast.add({
+			severity: 'error',
+			summary: 'Error',
+			detail: 'Por favor, llene todos los campos',
+			life: 3000,
+		})
+		return
+	}
+
+	invalid.value = false
 	loading.value = true
 	visitante.value.telefono = `${selectedCountry.value.countryCode}${numero.value}`
-
 	reserva.value.cantidadTotal = reserva.value.cantidad.reduce(
 		(acc, curr) => acc + curr.cantidad,
 		0
 	)
 	pago.value.total = precioTotal.value
-
 	const exito = await prereservar()
 	loading.value = false
 	if (exito.success) {
 		router.push({ name: 'PagoVisitante' })
 		return
 	}
-
 	toast.add({
 		severity: 'error',
 		summary: 'Error',

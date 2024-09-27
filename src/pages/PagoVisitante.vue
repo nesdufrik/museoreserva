@@ -1,4 +1,8 @@
 <template>
+	<TimerComponent
+		:timerVisible="true"
+		@timerFinished="tiempoFinalizado = true"
+	/>
 	<h1 class="text-center text-2xl font-bold">PAGO DE RESERVA</h1>
 	<div class="grid grid-cols-1 md:grid-cols-2">
 		<div>
@@ -67,6 +71,7 @@
 	</div>
 </template>
 <script setup>
+import TimerComponent from '@/components/TimerComponent.vue'
 import { ref, computed } from 'vue'
 import { useConfirm } from 'primevue/useconfirm'
 import { useToast } from 'primevue/usetoast'
@@ -209,7 +214,9 @@ const onUpload = (event) => {
 	})
 }
 
+const tiempoFinalizado = ref(false)
 const disabledButton = computed(() => {
+	if (tiempoFinalizado.value) return true
 	if (loading.value) return true
 	if (!pago.value.comprobante) return true
 	return false
@@ -228,4 +235,13 @@ const registrarPago = async () => {
 	router.push({ name: 'PagoRealizado' })
 	return
 }
+
+//Un toast para advertir al usuario que tiene 5min para realizar el pago
+toast.add({
+	severity: 'secondary',
+	summary: 'Información',
+	detail:
+		'Tienes 5 minutos para realizar el pago, de otra forma los cupos serán liberados y tendrás que volver a reservar',
+	life: 300000,
+})
 </script>
