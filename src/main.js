@@ -9,6 +9,7 @@ import pinia from './stores'
 import router from './router'
 
 import '@/config/axios'
+import './assets/base.css'
 import './assets/main.css'
 import 'primeicons/primeicons.css'
 

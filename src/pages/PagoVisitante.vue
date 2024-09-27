@@ -1,17 +1,30 @@
 <template>
-	<TimerComponent
-		:timerVisible="true"
-		@timerFinished="tiempoFinalizado = true"
-	/>
+	<TimerComponent :timerVisible="true" @timerFinished="returnToHome" />
 	<h1 class="text-center text-2xl font-bold">PAGO DE RESERVA</h1>
 	<div class="grid grid-cols-1 md:grid-cols-2">
 		<div>
-			<img
-				ref="qrImage"
-				src="@/assets/qr-code.jpg"
-				alt="QR Code"
-				class="w-3/4 md:w-1/2 mx-auto my-3"
-			/>
+			<Image alt="QR Codeage" preview>
+				<template #previewicon>
+					<i class="pi pi-search"></i>
+				</template>
+				<template #image>
+					<img
+						ref="qrImage"
+						src="@/assets/qr-code.jpg"
+						alt="image"
+						class="w-1/2 mx-auto"
+					/>
+				</template>
+				<template #preview="slotProps">
+					<img
+						src="@/assets/qr-code.jpg"
+						alt="preview"
+						class="w-full md:w-3/5 mx-auto"
+						:style="slotProps.style"
+						@click="slotProps.onClick"
+					/>
+				</template>
+			</Image>
 			<div class="flex justify-center gap-4">
 				<Button
 					label="Guardar QR"
@@ -45,7 +58,7 @@
 			</ConfirmDialog>
 			<FileUpload
 				mode="basic"
-				name="demo"
+				name="comprobante"
 				accept="image/*"
 				:maxFileSize="350000"
 				invalidFileSizeMessage="Tamaño de archivo excedido"
@@ -59,7 +72,7 @@
 				class="w-full"
 			/>
 			<Button
-				label="Ya pagué"
+				label="Registrar Pago"
 				icon="pi pi-check"
 				size="large"
 				@click="registrarPago"
@@ -92,8 +105,8 @@ const guardarQr = async () => {
 	try {
 		const canvas = document.createElement('canvas')
 		const ctx = canvas.getContext('2d')
-		canvas.width = qrImage.value.width
-		canvas.height = qrImage.value.height
+		canvas.width = '600'
+		canvas.height = '600'
 		ctx.drawImage(qrImage.value, 0, 0, canvas.width, canvas.height)
 
 		const dataUrl = canvas.toDataURL('image/jpg')
@@ -126,8 +139,8 @@ const compartirQr = async () => {
 		try {
 			const canvas = document.createElement('canvas')
 			const ctx = canvas.getContext('2d')
-			canvas.width = qrImage.value.width
-			canvas.height = qrImage.value.height
+			canvas.width = '600'
+			canvas.height = '600'
 			ctx.drawImage(qrImage.value, 0, 0, canvas.width, canvas.height)
 
 			const blob = await new Promise((resolve) =>
@@ -152,7 +165,7 @@ const compartirQr = async () => {
 					severity: 'info',
 					summary: 'Información',
 					detail: 'Compartir cancelado',
-					life: 3000,
+					life: 8000,
 				})
 			} else {
 				toast.add({
@@ -222,6 +235,10 @@ const disabledButton = computed(() => {
 	return false
 })
 
+const returnToHome = () => {
+	router.push({ name: 'Home' })
+}
+
 const registrarPago = async () => {
 	loading.value = true
 	const exito = await pagarReserva()
@@ -236,12 +253,11 @@ const registrarPago = async () => {
 	return
 }
 
-//Un toast para advertir al usuario que tiene 5min para realizar el pago
 toast.add({
-	severity: 'secondary',
+	severity: 'info',
 	summary: 'Información',
 	detail:
-		'Tienes 5 minutos para realizar el pago, de otra forma los cupos serán liberados y tendrás que volver a reservar',
-	life: 300000,
+		'Tienes 5 minutos para realizar el pago, de otra forma los cupos serán liberados y tendrás que iniciar el registro nuevamente',
+	life: 8000,
 })
 </script>

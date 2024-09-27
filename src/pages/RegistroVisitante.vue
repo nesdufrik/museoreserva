@@ -127,7 +127,7 @@
 				</InputGroup>
 			</div>
 			<Button
-				label="Reserva ahora"
+				label="Registrar"
 				icon="pi pi-calendar"
 				size="large"
 				:loading="loading"

@@ -1,5 +1,5 @@
 <template>
-	<main class="container mx-auto px-4 py-0">
+	<main class="container mx-auto px-4 lg:px-36 py-0">
 		<Toast position="top-center" :pt="{ root: 'w-11/12' }" />
 		<Menubar class="mb-5 sticky top-0 py-0 px-2">
 			<template #start>
