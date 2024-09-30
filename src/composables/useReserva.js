@@ -1,5 +1,10 @@
 import { storeToRefs } from 'pinia'
-import { postReserva, postPreReserva } from '@/services/reservasService'
+import {
+	postReserva,
+	postPreReserva,
+	getStates,
+	getCities,
+} from '@/services/reservasService'
 import { useReservaStore } from '@/stores/reservaStore'
 
 export const useReserva = () => {
@@ -42,6 +47,16 @@ export const useReserva = () => {
 		return response
 	}
 
+	const getEstados = async (code_pais) => {
+		const response = await getStates(code_pais)
+		return response
+	}
+
+	const getCiudades = async (id_estado) => {
+		const response = await getCities(id_estado)
+		return response
+	}
+
 	return {
 		visitante,
 		reserva,
@@ -50,5 +65,7 @@ export const useReserva = () => {
 
 		pagarReserva,
 		prereservar,
+		getEstados,
+		getCiudades,
 	}
 }

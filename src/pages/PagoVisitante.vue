@@ -60,7 +60,7 @@
 				mode="basic"
 				name="comprobante"
 				accept="image/*"
-				:maxFileSize="350000"
+				:maxFileSize="5000000"
 				invalidFileSizeMessage="Tamaño de archivo excedido"
 				invalidFileTypeMessage="Tipo de archivo no permitido"
 				@select="onUpload"

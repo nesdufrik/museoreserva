@@ -73,6 +73,94 @@
 					:invalid="visitante.email === '' && invalid"
 				/>
 			</div>
+			<div clas="flex-auto">
+				<label for="lugar-cliente" class="font-bold block mb-2"
+					>Desde donde nos visitas</label
+				>
+				<InputGroup>
+					<Select
+						v-model="searchCountry.country"
+						:options="countries"
+						optionLabel="country"
+						placeholder="🌎"
+						class="w-2/5"
+						v-on:update:model-value="loadStates(searchCountry.country.code)"
+					>
+						<template #value="slotProps">
+							<div v-if="slotProps.value" class="flex items-center">
+								<div>
+									{{ `${slotProps.value.country}` }}
+								</div>
+							</div>
+							<span v-else>
+								{{ slotProps.placeholder }}
+							</span>
+						</template>
+						<template #option="slotProps">
+							<div class="flex items-center">
+								<div>
+									{{ slotProps.option.country }}
+								</div>
+							</div>
+						</template>
+					</Select>
+					<Select
+						v-model="searchCountry.state"
+						:disabled="searchCountry.country === null || states.length === 0"
+						:loading="loadingState"
+						:options="states"
+						optionLabel="country"
+						placeholder="Seleccione..."
+						class="w-2/5"
+						v-on:update:model-value="loadCities(searchCountry.state.id)"
+					>
+						<template #value="slotProps">
+							<div v-if="slotProps.value" class="flex items-center">
+								<div>
+									{{ `${slotProps.value.name}` }}
+								</div>
+							</div>
+							<span v-else>
+								{{ slotProps.placeholder }}
+							</span>
+						</template>
+						<template #option="slotProps">
+							<div class="flex items-center">
+								<div>
+									{{ slotProps.option.name }}
+								</div>
+							</div>
+						</template>
+					</Select>
+					<Select
+						v-model="searchCountry.cytie"
+						:disabled="searchCountry.state === null || cities.length === 0"
+						:options="cities"
+						:loading="loadingCity"
+						optionLabel="country"
+						placeholder="Seleccione..."
+						class="w-2/5"
+					>
+						<template #value="slotProps">
+							<div v-if="slotProps.value" class="flex items-center">
+								<div>
+									{{ `${slotProps.value.name}` }}
+								</div>
+							</div>
+							<span v-else>
+								{{ slotProps.placeholder }}
+							</span>
+						</template>
+						<template #option="slotProps">
+							<div class="flex items-center">
+								<div>
+									{{ slotProps.option.name }}
+								</div>
+							</div>
+						</template>
+					</Select>
+				</InputGroup>
+			</div>
 			<div class="flex-auto">
 				<label for="numero-cliente" class="font-bold block mb-2"
 					>Número de teléfono</label
@@ -81,7 +169,6 @@
 					<Select
 						v-model="selectedCountry"
 						:options="countries"
-						filter
 						optionLabel="country"
 						placeholder="🌎"
 						class="w-2/5"
@@ -138,7 +225,7 @@
 	</div>
 </template>
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { format } from '@formkit/tempo'
 import { useReserva } from '@/composables/useReserva'
@@ -146,11 +233,20 @@ import { useEvento } from '@/composables/useEvento'
 import countries from '@/data/countries.json'
 import { useToast } from 'primevue/usetoast'
 
-const { visitante, pago, horario, reserva, prereservar } = useReserva()
+const {
+	visitante,
+	pago,
+	horario,
+	reserva,
+	prereservar,
+	getEstados,
+	getCiudades,
+} = useReserva()
 const { evento } = useEvento()
 
 const router = useRouter()
 const toast = useToast()
+
 const selectedCountry = ref({
 	country: 'Bolivia',
 	countryCode: 591,
@@ -161,9 +257,19 @@ const selectedCountry = ref({
 	phoneLength: 9,
 })
 
+const searchCountry = reactive({
+	country: null,
+	state: null,
+	cytie: null,
+})
+
+const states = ref([])
+const cities = ref([])
 const numero = ref(null)
 const loading = ref(false)
 const invalid = ref(false)
+const loadingState = ref(false)
+const loadingCity = ref(false)
 
 const cuposRestantes = computed(
 	() =>
@@ -216,5 +322,21 @@ const registrarReserva = async () => {
 		detail: exito.message,
 		life: 3000,
 	})
+}
+const loadStates = async (country) => {
+	cities.value = []
+	states.value = []
+	searchCountry.state = null
+	searchCountry.cytie = null
+	loadingState.value = true
+	states.value = await getEstados(country)
+	loadingState.value = false
+}
+const loadCities = async (state) => {
+	cities.value = []
+	searchCountry.cytie = null
+	loadingCity.value = true
+	cities.value = await getCiudades(state)
+	loadingCity.value = false
 }
 </script>

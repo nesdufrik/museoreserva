@@ -1,10 +1,10 @@
 <template>
 	<div v-if="timerVisible" class="fixed left-4 md:left-10 top-12">
 		<div
-			class="w-20 h-20 rounded-full bg-[color:red] flex flex-col items-center justify-center"
+			class="w-20 h-20 rounded-full bg-primary flex flex-col items-center justify-center"
 		>
 			<span class="text-white text-lg font-bold">{{ formattedTime }}</span>
-			<small class="text-xs text-center">Tiempo restante</small>
+			<small class="text-xs text-white text-center">Tiempo restante</small>
 		</div>
 	</div>
 </template>
@@ -21,7 +21,7 @@ const props = defineProps({
 
 const emit = defineEmits(['timerFinished'])
 
-const timeLeft = ref(1 * 60) // 5 minutos en segundos
+const timeLeft = ref(3 * 60) // 5 minutos en segundos
 const desactivar = ref(false)
 
 const formattedTime = computed(() => {

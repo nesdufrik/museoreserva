@@ -17,3 +17,21 @@ export const postPreReserva = async (reserva) => {
 		console.error(error)
 	}
 }
+
+export const getStates = async (country) => {
+	try {
+		const response = await axios.get(`/countries?country=${country}`)
+		return response.data
+	} catch (error) {
+		console.error(error)
+	}
+}
+
+export const getCities = async (state) => {
+	try {
+		const response = await axios.get(`/countries?state=${state}`)
+		return response.data
+	} catch (error) {
+		console.error(error)
+	}
+}
