@@ -19,6 +19,7 @@
 						<InputNumber
 							inputClass="w-full"
 							:inputId="`cantidad-personas${index}`"
+							:invalid="invalid"
 							v-model="reserva.cantidad[index].cantidad"
 							showButtons
 							buttonLayout="horizontal"
@@ -74,7 +75,7 @@
 				/>
 			</div>
 			<div clas="flex-auto">
-				<label for="lugar-cliente" class="font-bold block mb-2"
+				<label for="lugar-cliente" class="block mb-2"
 					>Desde donde nos visitas</label
 				>
 				<InputGroup>
@@ -86,83 +87,32 @@
 						class="w-2/5"
 						v-on:update:model-value="loadStates(searchCountry.country.code)"
 					>
-						<template #value="slotProps">
-							<div v-if="slotProps.value" class="flex items-center">
-								<div>
-									{{ `${slotProps.value.country}` }}
-								</div>
-							</div>
-							<span v-else>
-								{{ slotProps.placeholder }}
-							</span>
-						</template>
-						<template #option="slotProps">
-							<div class="flex items-center">
-								<div>
-									{{ slotProps.option.country }}
-								</div>
-							</div>
-						</template>
 					</Select>
 					<Select
 						v-model="searchCountry.state"
 						:disabled="searchCountry.country === null || states.length === 0"
 						:loading="loadingState"
 						:options="states"
-						optionLabel="country"
+						optionLabel="name"
 						placeholder="Seleccione..."
 						class="w-2/5"
 						v-on:update:model-value="loadCities(searchCountry.state.id)"
 					>
-						<template #value="slotProps">
-							<div v-if="slotProps.value" class="flex items-center">
-								<div>
-									{{ `${slotProps.value.name}` }}
-								</div>
-							</div>
-							<span v-else>
-								{{ slotProps.placeholder }}
-							</span>
-						</template>
-						<template #option="slotProps">
-							<div class="flex items-center">
-								<div>
-									{{ slotProps.option.name }}
-								</div>
-							</div>
-						</template>
 					</Select>
 					<Select
 						v-model="searchCountry.cytie"
 						:disabled="searchCountry.state === null || cities.length === 0"
 						:options="cities"
 						:loading="loadingCity"
-						optionLabel="country"
+						optionLabel="name"
 						placeholder="Seleccione..."
 						class="w-2/5"
 					>
-						<template #value="slotProps">
-							<div v-if="slotProps.value" class="flex items-center">
-								<div>
-									{{ `${slotProps.value.name}` }}
-								</div>
-							</div>
-							<span v-else>
-								{{ slotProps.placeholder }}
-							</span>
-						</template>
-						<template #option="slotProps">
-							<div class="flex items-center">
-								<div>
-									{{ slotProps.option.name }}
-								</div>
-							</div>
-						</template>
 					</Select>
 				</InputGroup>
 			</div>
 			<div class="flex-auto">
-				<label for="numero-cliente" class="font-bold block mb-2"
+				<label for="numero-cliente" class="block mb-2"
 					>Número de teléfono</label
 				>
 				<InputGroup>
@@ -290,13 +240,15 @@ const registrarReserva = async () => {
 	if (
 		visitante.value.nombre === '' ||
 		visitante.value.email === '' ||
-		numero.value === null
+		numero.value === null ||
+		precioTotal.value === 0
 	) {
 		invalid.value = true
 		toast.add({
 			severity: 'error',
 			summary: 'Error',
-			detail: 'Por favor, llene todos los campos',
+			detail:
+				'Por favor, complete todos los campos o verifique que selecciono al menos un tipo de entrada',
 			life: 3000,
 		})
 		return
@@ -305,10 +257,13 @@ const registrarReserva = async () => {
 	invalid.value = false
 	loading.value = true
 	visitante.value.telefono = `${selectedCountry.value.countryCode}${numero.value}`
-	reserva.value.cantidadTotal = reserva.value.cantidad.reduce(
-		(acc, curr) => acc + curr.cantidad,
-		0
-	)
+	;(visitante.value.pais = searchCountry.country.country),
+		(visitante.value.estado = searchCountry.state.name),
+		(visitante.value.ciudad = searchCountry.cytie.name),
+		(reserva.value.cantidadTotal = reserva.value.cantidad.reduce(
+			(acc, curr) => acc + curr.cantidad,
+			0
+		))
 	pago.value.total = precioTotal.value
 	const exito = await prereservar()
 	loading.value = false

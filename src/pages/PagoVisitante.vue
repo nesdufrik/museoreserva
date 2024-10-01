@@ -257,7 +257,7 @@ toast.add({
 	severity: 'info',
 	summary: 'Información',
 	detail:
-		'Tienes 5 minutos para realizar el pago, de otra forma los cupos serán liberados y tendrás que iniciar el registro nuevamente',
+		'Tiene 3 minutos para realizar el pago, de otra forma los cupos serán liberados y tendrás que iniciar el registro nuevamente',
 	life: 8000,
 })
 </script>
