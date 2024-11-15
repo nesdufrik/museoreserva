@@ -8,7 +8,7 @@
 				:disabledDays="evento?.diasNoActivo"
 				:minDate="new Date()"
 				@update:modelValue="
-					cargarHorarios(dateCalendario, 'd999971a-613f-4093-9361-9213f819d011')
+					cargarHorarios(dateCalendario, $route.params.idEvento)
 				"
 			/>
 		</div>
@@ -40,7 +40,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 
 import { useEvento } from '@/composables/useEvento'
 import { useHorarios } from '@/composables/useHorarios'
@@ -52,6 +52,7 @@ const { reserva, horario } = useReserva()
 
 const dateCalendario = ref(new Date())
 const router = useRouter()
+const route = useRoute()
 
 const registrarDatosReserva = (idProg) => {
 	const tipoVisitas = evento.value.precios.map((pago) => ({
@@ -81,6 +82,6 @@ const botonDesactivado = (hora, activo) => {
 	return !activo
 }
 
-cargarEvento('d999971a-613f-4093-9361-9213f819d011')
-cargarHorarios(dateCalendario.value, 'd999971a-613f-4093-9361-9213f819d011')
+cargarEvento(route.params.idEvento)
+cargarHorarios(dateCalendario.value, route.params.idEvento)
 </script>

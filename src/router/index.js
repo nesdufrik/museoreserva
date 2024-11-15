@@ -3,10 +3,16 @@ import { createWebHistory, createRouter } from 'vue-router'
 import Home from '@/pages/Home.vue'
 import RegistroVisitante from '@/pages/RegistroVisitante.vue'
 import PagoVisitante from '@/pages/PagoVisitante.vue'
+import Eventos from '@/pages/Eventos.vue'
 
 const routes = [
 	{
 		path: '/',
+		name: 'Eventos',
+		component: Eventos,
+	},
+	{
+		path: '/:idEvento',
 		name: 'Home',
 		component: Home,
 	},

@@ -1,19 +1,25 @@
 import { storeToRefs } from 'pinia'
-import { getEventos } from '@/services/eventosService'
+import { getEventos, getEvento } from '@/services/eventosService'
 import { useEventoStore } from '@/stores/eventoStore'
 
 export const useEvento = () => {
 	const eventoStore = useEventoStore()
-	const { evento } = storeToRefs(eventoStore)
+	const { evento, eventos } = storeToRefs(eventoStore)
 
 	const cargarEvento = async (idEvento) => {
-		const response = await getEventos(idEvento)
+		const response = await getEvento(idEvento)
 		evento.value = response.data
+	}
+
+	const cargarEventos = async () => {
+		const response = await getEventos()
+		eventos.value = response.data
 	}
 
 	return {
 		evento,
-
+		eventos,
 		cargarEvento,
+		cargarEventos,
 	}
 }
