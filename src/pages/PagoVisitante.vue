@@ -92,10 +92,8 @@ import { useRouter } from 'vue-router'
 import { useReserva } from '@/composables/useReserva'
 import { useConfiguracion } from '@/composables/useConfiguracion'
 
-const { configuracion, loadConfiguracion } = useConfiguracion()
+const { configuracion } = useConfiguracion()
 const { pago, pagarReserva } = useReserva()
-
-loadConfiguracion()
 
 const toast = useToast()
 const confirm = useConfirm()

@@ -45,10 +45,12 @@ import { useRouter, useRoute } from 'vue-router'
 import { useEvento } from '@/composables/useEvento'
 import { useHorarios } from '@/composables/useHorarios'
 import { useReserva } from '@/composables/useReserva'
+import { useConfiguracion } from '@/composables/useConfiguracion'
 
 const { cargarEvento, evento } = useEvento()
 const { horarios, cargarHorarios, action } = useHorarios()
 const { reserva, horario } = useReserva()
+const { loadConfiguracion } = useConfiguracion()
 
 const dateCalendario = ref(new Date())
 const router = useRouter()
@@ -84,4 +86,5 @@ const botonDesactivado = (hora, activo) => {
 
 cargarEvento(route.params.idEvento)
 cargarHorarios(dateCalendario.value, route.params.idEvento)
+loadConfiguracion()
 </script>
