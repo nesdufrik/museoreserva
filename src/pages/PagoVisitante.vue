@@ -10,14 +10,14 @@
 				<template #image>
 					<img
 						ref="qrImage"
-						src="@/assets/qr-code.jpg"
+						:src="configuracion.qrPago"
 						alt="image"
 						class="w-1/2 mx-auto"
 					/>
 				</template>
 				<template #preview="slotProps">
 					<img
-						src="@/assets/qr-code.jpg"
+						:src="configuracion.qrPago"
 						alt="preview"
 						class="w-full md:w-3/5 mx-auto"
 						:style="slotProps.style"
@@ -90,8 +90,12 @@ import { useConfirm } from 'primevue/useconfirm'
 import { useToast } from 'primevue/usetoast'
 import { useRouter } from 'vue-router'
 import { useReserva } from '@/composables/useReserva'
+import { useConfiguracion } from '@/composables/useConfiguracion'
 
+const { configuracion, loadConfiguracion } = useConfiguracion()
 const { pago, pagarReserva } = useReserva()
+
+loadConfiguracion()
 
 const toast = useToast()
 const confirm = useConfirm()
@@ -236,7 +240,7 @@ const disabledButton = computed(() => {
 })
 
 const returnToHome = () => {
-	router.push({ name: 'Home' })
+	router.push({ name: 'Eventos' })
 }
 
 const registrarPago = async () => {
@@ -256,8 +260,7 @@ const registrarPago = async () => {
 toast.add({
 	severity: 'info',
 	summary: 'Información',
-	detail:
-		'Tiene 3 minutos para realizar el pago, de otra forma los cupos serán liberados y tendrás que iniciar el registro nuevamente',
+	detail: `Tiene ${configuracion.value.tiempoEspera} minutos para realizar el pago, de otra forma los cupos serán liberados y tendrás que iniciar el registro nuevamente`,
 	life: 8000,
 })
 </script>

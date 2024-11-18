@@ -24,7 +24,7 @@
 <script setup>
 const toggleTheme = () => {
 	const theme = document.querySelector('html')
-	theme.classList.toggle('dark-mode')
+	theme.classList.toggle('p-dark')
 	const icon = document.querySelector('.pi')
 	icon.classList.toggle('pi-moon')
 	icon.classList.toggle('pi-sun')

@@ -11,6 +11,9 @@
 
 <script setup>
 import { ref, computed, watch, onMounted } from 'vue'
+import { useConfiguracion } from '@/composables/useConfiguracion'
+
+const { configuracion } = useConfiguracion()
 
 const props = defineProps({
 	timerVisible: {
@@ -21,7 +24,7 @@ const props = defineProps({
 
 const emit = defineEmits(['timerFinished'])
 
-const timeLeft = ref(3 * 60) // 5 minutos en segundos
+const timeLeft = ref(configuracion.value.tiempoEspera * 60)
 const desactivar = ref(false)
 
 const formattedTime = computed(() => {
