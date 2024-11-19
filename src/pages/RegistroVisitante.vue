@@ -208,12 +208,30 @@ const selectedCountry = ref({
 })
 
 const searchCountry = reactive({
-	country: null,
+	country: {
+		country: 'Bolivia',
+		countryCode: 591,
+		code: 'BO',
+		flag: 'https://flagcdn.com/bo.svg',
+		emoji: '🇧🇴',
+		latinAmerica: true,
+		phoneLength: 9,
+	},
 	state: null,
 	cytie: null,
 })
 
-const states = ref([])
+const states = ref([
+	{ id: 3375, name: 'Beni' },
+	{ id: 3382, name: 'Chuquisaca' },
+	{ id: 3381, name: 'Cochabamba' },
+	{ id: 3380, name: 'La Paz' },
+	{ id: 3376, name: 'Oruro' },
+	{ id: 3379, name: 'Pando' },
+	{ id: 3383, name: 'Potosí' },
+	{ id: 3377, name: 'Santa Cruz' },
+	{ id: 3378, name: 'Tarija' },
+])
 const cities = ref([])
 const numero = ref(null)
 const loading = ref(false)
