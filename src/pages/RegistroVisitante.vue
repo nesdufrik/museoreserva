@@ -232,6 +232,7 @@ const states = ref([
 	{ id: 3377, name: 'Santa Cruz' },
 	{ id: 3378, name: 'Tarija' },
 ])
+
 const cities = ref([])
 const numero = ref(null)
 const loading = ref(false)
@@ -275,13 +276,13 @@ const registrarReserva = async () => {
 	invalid.value = false
 	loading.value = true
 	visitante.value.telefono = `${selectedCountry.value.countryCode}${numero.value}`
-	;(visitante.value.pais = searchCountry.country.country),
-		(visitante.value.estado = searchCountry.state.name),
-		(visitante.value.ciudad = searchCountry.cytie.name),
-		(reserva.value.cantidadTotal = reserva.value.cantidad.reduce(
-			(acc, curr) => acc + curr.cantidad,
-			0
-		))
+	visitante.value.pais = searchCountry.country.country ?? ''
+	visitante.value.estado = searchCountry.state?.name ?? ''
+	visitante.value.ciudad = searchCountry.cytie?.name ?? ''
+	reserva.value.cantidadTotal = reserva.value.cantidad.reduce(
+		(acc, curr) => acc + curr.cantidad,
+		0
+	)
 	pago.value.total = precioTotal.value
 	const exito = await prereservar()
 	loading.value = false
