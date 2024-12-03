@@ -5,7 +5,7 @@ export const useConfiguracionStore = defineStore('configuracion', {
 		return {
 			configuracion: {
 				qrPago: '',
-				tiempoEspera: 3,
+				tiempoEspera: 10,
 			},
 		}
 	},

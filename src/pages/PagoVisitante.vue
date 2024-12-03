@@ -1,6 +1,6 @@
 <template>
 	<TimerComponent :timerVisible="true" @timerFinished="returnToHome" />
-	<h1 class="text-center text-2xl font-bold">PAGO DE RESERVA</h1>
+	<h1 class="text-center text-2xl font-bold text-primary">PAGO DE RESERVA</h1>
 	<div class="grid grid-cols-1 md:grid-cols-2">
 		<div>
 			<Image alt="QR Codeage" preview>
@@ -31,14 +31,12 @@
 					icon="pi pi-download"
 					size="small"
 					@click="guardarQr"
-					severity="secondary"
 				/>
 				<Button
 					label="Compartir"
 					icon="pi pi-share-alt"
 					size="small"
 					@click="compartirQr"
-					severity="secondary"
 				/>
 			</div>
 			<div class="text-center text-xl font-semibold my-4">
@@ -68,7 +66,7 @@
 				auto
 				chooseLabel="Subir comprobante"
 				chooseIcon="pi pi-upload"
-				:chooseButtonProps="{ size: 'large', severity: 'secondary' }"
+				:chooseButtonProps="{ size: 'large', severity: 'primary' }"
 				class="w-full"
 			/>
 			<Button
@@ -76,7 +74,7 @@
 				icon="pi pi-check"
 				size="large"
 				@click="registrarPago"
-				severity="success"
+				:severity="disabledButton ? 'secondary' : 'primary'"
 				:disabled="disabledButton"
 				:loading="loading"
 			/>

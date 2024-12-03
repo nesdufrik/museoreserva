@@ -10,14 +10,16 @@
 			style=""
 			data-pd-animateonscroll="true"
 		>
-			<div class="font-semibold mb-4 text-lg">{{ evento.nombre }}</div>
+			<div class="font-semibold mb-4 text-lg text-primary">
+				{{ evento.nombre }}
+			</div>
 			<p class="m-0 text-surface-500 dark:text-surface-400 font-medium">
 				{{ evento.descripcion }}
 			</p>
 			<div class="flex gap-4 mt-1 justify-end">
 				<Button
 					label="Reservar"
-					text
+					outlined
 					class="w-32"
 					as="router-link"
 					:to="`/${evento.identificador}`"

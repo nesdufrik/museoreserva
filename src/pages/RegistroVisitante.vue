@@ -1,19 +1,23 @@
 <template>
-	<h2 class="text-center text-2xl font-bold mb-3">DATOS DEL VISITANTE</h2>
-	<div class="card flex flex-col mb-10">
-		<div class="text-center">{{ format(horario.fecha, 'long', 'es') }}</div>
-	</div>
 	<!--Formulario-->
-	<div class="w-full">
-		<form class="flex flex-col gap-4">
+	<Panel>
+		<template #header>
+			<div class="flex flex-col w-full text-center">
+				<h2 class="text-2xl font-bold text-primary">DATOS DEL VISITANTE</h2>
+				<div class="">
+					{{ format(horario.fecha, 'long', 'es') }}
+				</div>
+			</div>
+		</template>
+		<form class="flex flex-col gap-4 w-full">
 			<div class="flex gap-6">
-				<div class="w-1/2">
+				<div class="w-1/2 flex flex-col gap-4">
 					<div
-						class="flex-auto mb-2"
+						class="flex-auto"
 						v-for="(pago, index) in evento.precios"
 						:key="index"
 					>
-						<label :for="`cantidad-personas${index}`" class="block mb-2">
+						<label :for="`cantidad-personas${index}`" class="block">
 							{{ pago.tipo }}
 						</label>
 						<InputNumber
@@ -54,37 +58,36 @@
 					</div>
 				</div>
 			</div>
-			<div class="flex flex-col gap-2">
-				<label for="nombre-cliente">Nombre completo</label>
+			<div>
+				<label for="nombre-cliente">Nombre completo *</label>
 				<InputText
 					class="uppercase"
 					type="text"
+					fluid
 					id="nombre-cliente"
 					v-model="visitante.nombre"
 					:invalid="visitante.nombre === '' && invalid"
 				/>
 			</div>
-			<div class="flex flex-col gap-2">
+			<div>
 				<label for="correo-cliente">Correo electrónico</label>
 				<InputText
 					class="lowercase"
 					type="email"
+					fluid
 					id="correo-cliente"
 					v-model="visitante.email"
-					:invalid="visitante.email === '' && invalid"
 				/>
 			</div>
-			<div clas="flex-auto">
-				<label for="lugar-cliente" class="block mb-2"
-					>Desde donde nos visitas</label
-				>
+			<div>
+				<label for="lugar-cliente">Desde donde nos visitas</label>
 				<InputGroup>
 					<Select
 						v-model="searchCountry.country"
 						:options="countries"
 						optionLabel="country"
 						placeholder="🌎"
-						class="w-2/5"
+						class="w-1/3"
 						v-on:update:model-value="loadStates(searchCountry.country.code)"
 					>
 					</Select>
@@ -95,7 +98,7 @@
 						:options="states"
 						optionLabel="name"
 						placeholder="Seleccione..."
-						class="w-2/5"
+						class="w-1/3"
 						v-on:update:model-value="loadCities(searchCountry.state.id)"
 					>
 					</Select>
@@ -106,22 +109,20 @@
 						:loading="loadingCity"
 						optionLabel="name"
 						placeholder="Seleccione..."
-						class="w-2/5"
+						class="w-1/3"
 					>
 					</Select>
 				</InputGroup>
 			</div>
-			<div class="flex-auto">
-				<label for="numero-cliente" class="block mb-2"
-					>Número de teléfono</label
-				>
+			<div>
+				<label for="numero-cliente">Número de teléfono *</label>
 				<InputGroup>
 					<Select
 						v-model="selectedCountry"
 						:options="countries"
 						optionLabel="country"
 						placeholder="🌎"
-						class="w-2/5"
+						class="w-2/5 sm:w-3/12"
 					>
 						<template #value="slotProps">
 							<div v-if="slotProps.value" class="flex items-center">
@@ -159,7 +160,7 @@
 						:invalid="numero === null && invalid"
 						inputId="numero-cliente"
 						:useGrouping="false"
-						class="w-auto"
+						class="w-3/5 sm:w-9/12"
 					/>
 				</InputGroup>
 			</div>
@@ -172,7 +173,7 @@
 				@click="registrarReserva"
 			/>
 		</form>
-	</div>
+	</Panel>
 </template>
 <script setup>
 import { computed, reactive, ref } from 'vue'
@@ -258,7 +259,6 @@ const precioTotal = computed(() =>
 const registrarReserva = async () => {
 	if (
 		visitante.value.nombre === '' ||
-		visitante.value.email === '' ||
 		numero.value === null ||
 		precioTotal.value === 0
 	) {

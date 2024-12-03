@@ -1,5 +1,7 @@
 <template>
-	<h2 class="text-center text-2xl font-bold mb-3">FECHAS Y HORARIOS</h2>
+	<h2 class="text-center text-2xl font-bold mb-3 text-primary">
+		FECHAS Y HORARIOS
+	</h2>
 	<div class="grid grid-cols-1 md:grid-cols-2">
 		<div class="flex justify-center mb-5">
 			<DatePicker
