@@ -1,29 +1,30 @@
 <template>
-	<div
-		class="col-span-12 md:col-span-6 xl:col-span-3 flex justify-center"
-		style="width: 25rem"
-		v-for="(evento, index) in eventos"
-		:key="index"
-	>
+	<div class="flex flex-col gap-5">
 		<div
-			class="box p-6 w-full animate-duration-500"
-			style=""
-			data-pd-animateonscroll="true"
+			class="col-span-12 md:col-span-6 xl:col-span-3 flex justify-center"
+			v-for="(evento, index) in eventos"
+			:key="index"
 		>
-			<div class="font-semibold mb-4 text-lg text-primary">
-				{{ evento.nombre }}
-			</div>
-			<p class="m-0 text-surface-500 dark:text-surface-400 font-medium">
-				{{ evento.descripcion }}
-			</p>
-			<div class="flex gap-4 mt-1 justify-end">
-				<Button
-					label="Reservar"
-					outlined
-					class="w-32"
-					as="router-link"
-					:to="`/${evento.identificador}`"
-				/>
+			<div
+				class="box p-6 w-full animate-duration-500"
+				style=""
+				data-pd-animateonscroll="true"
+			>
+				<div class="font-semibold mb-4 text-lg text-primary">
+					{{ evento.nombre }}
+				</div>
+				<p class="m-0 text-surface-500 dark:text-surface-400 font-medium">
+					{{ evento.descripcion }}
+				</p>
+				<div class="flex gap-4 mt-1 justify-end">
+					<Button
+						label="Reservar"
+						outlined
+						class="w-32"
+						as="router-link"
+						:to="`/${evento.identificador}`"
+					/>
+				</div>
 			</div>
 		</div>
 	</div>
